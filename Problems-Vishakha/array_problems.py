@@ -16,3 +16,37 @@ def two_sums(arr,target):
         
         
 print(two_sums(nums,target))
+
+#using two pointer technique:
+
+def two_sums(arr,target):
+
+    left, right = 0,len(arr)-1
+    while left < right:
+        sum = arr[left] + arr[right]
+        if sum == target:
+            return True
+        elif sum > target:
+            right -=1
+        else:
+            left +=1
+            
+    return False
+        
+    
+
+#Remove duplicates in place-> two pointer technique
+#https://leetcode.com/problems/remove-duplicates-from-sorted-array
+
+arr = [0,0,0,1,1,1,2,2,3,3,4]
+
+def removeDuplicates(nums):
+    i = 0
+    
+    for j in range(1,len(arr)):
+        if arr[i]!=arr[j]:
+            i += 1
+            arr[i] = arr[j]
+    return i+1
+      
+print(removeDuplicates(arr))
