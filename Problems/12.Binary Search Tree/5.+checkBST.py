@@ -70,5 +70,4 @@ root4 = BSTNode(5)
 root4.left = BSTNode(10)
 root4.right = BSTNode(15)
 
-print_bst(root4)
-print(checkBST_limit(root4,5,50))
+print(checkBST_limit(root4,float('-inf'),float('inf')))
