@@ -1,0 +1,1184 @@
+<h1 id="-arrays-list">✅ Arrays/List</h1>
+<h2 id="-easy">🟢 Easy</h2>
+<details>
+  <summary><span style="font-size:19px;"><strong>Two Sum - </strong><a href="https://leetcode.com/problems/two-sum/" target="_blank">#1</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: List of integers (e.g., <code>[2, 7, 11, 15]</code>)
+- <code>target</code>: Integer (e.g., <code>9</code>)
+
+    ---
+
+### 📤 Output
+
+- A list of <strong>two indices</strong> <code>[i, j]</code> such that:
+
+    <code>python
+    nums[i] + nums[j] == target</code>
+
+    ---
+
+### ✅ Example
+
+  <code>py
+  Input: nums = [2, 7, 11, 15], target = 9  
+  Output: [0, 1]
+
+  Explanation: nums[0] + nums[1] = 2 + 7 = 9</code>
+
+  <details>
+      <summary><strong>Solution Code</strong></summary>
+
+    <code>py
+    class Solution:
+        def twoSum(self, nums: List[int], target: int) -&gt; List[int]:
+            has = {}
+            for i, num in enumerate(nums):
+                if target - num in has:
+                    return has[target - num], i
+                has[num] = i</code>
+
+  </details>
+
+  <details>
+        <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n) — single pass through the list, dictionary lookups are O(1) average
+- <strong>Space Complexity:</strong> O(n) — dictionary stores at most n elements
+
+    </details>
+
+<pre><code><span class="hljs-section">&lt;/details&gt;</span>
+</code></pre><hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Remove Duplicates from Sorted Array - </strong><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/" target="_blank">#26</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: Sorted list of integers (e.g., <code>[1,1,2]</code>)
+
+### 📤 Output
+
+- Return the <strong>new length</strong> after removing duplicates <strong>in-place</strong>, with unique elements at the start.
+
+### ✅ Example
+
+  <code>py
+  Input: nums = [1,1,2]
+  Output: 2  
+  Modified nums = [1,2,...]
+
+  Explanation: The first two elements after modification are unique.</code>
+
+  <details>
+      <summary><strong>Solution Code</strong></summary>
+
+  <code>py
+  class Solution:
+      def removeDuplicates(self, nums: List[int]) -&gt; int:
+          if not nums:
+              return 0
+          i = 0
+          for j in range(1, len(nums)):
+              if nums[j] != nums[i]:
+                  i += 1
+                  nums[i] = nums[j]
+          return i + 1</code>
+
+  </details>
+
+  <details>
+        <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n) — single pass
+- <strong>Space Complexity:</strong> O(1) — in-place
+
+  </details>
+
+<p>  </details></p>
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Best Time to Buy and Sell Stock - </strong><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank">#121</a></span></summary>
+
+### 🧾 Input
+
+- <code>prices</code>: List of integers representing the stock price on each day (e.g., <code>[7,1,5,3,6,4]</code>)
+
+  ---
+
+### 📤 Output
+
+- Maximum profit possible from a single buy-sell transaction.
+
+  ---
+
+### ✅ Example
+
+  <code>py
+  Input: prices = [7,1,5,3,6,4]
+  Output: 5
+
+  Explanation: Buy on day 2 (price = 1), sell on day 5 (price = 6), profit = 6 - 1 = 5</code>
+
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+
+  <code>py
+  class Solution:
+      def maxProfit(self, prices: List[int]) -&gt; int:
+          min_price = float(&#39;inf&#39;)
+          max_profit = 0
+          for price in prices:
+              if price &lt; min_price:
+                  min_price = price
+              elif price - min_price &gt; max_profit:
+                  max_profit = price - min_price
+          return max_profit</code>
+
+  </details>
+
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n)
+- <strong>Space Complexity:</strong> O(1)
+
+  </details>
+
+<p>  </details></p>
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Merge Sorted Array - </strong><a href="https://leetcode.com/problems/merge-sorted-array/" target="_blank">#88</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums1</code>: First sorted list with extra space (e.g., <code>[1,2,3,0,0,0]</code>)
+- <code>m</code>: Number of valid elements in <code>nums1</code>
+- <code>nums2</code>: Second sorted list (e.g., <code>[2,5,6]</code>)
+- <code>n</code>: Number of elements in <code>nums2</code>
+
+---
+
+### 📤 Output
+
+- Merged sorted array in <code>nums1</code> in-place.
+
+---
+
+### ✅ Example
+
+<code>py
+Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+Output: [1,2,2,3,5,6]</code>
+
+- The final sorted array should not be returned by the function, but instead be stored inside the array nums1. To accommodate this, nums1 has a length of m + n, where the first m elements denote the elements that should be merged, and the last n elements are set to 0 and should be ignored. nums2 has a length of n.
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>py
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -&gt; None:
+        i, j, k = m - 1, n - 1, m + n - 1
+        while i &gt;= 0 and j &gt;= 0:
+            if nums1[i] &gt; nums2[j]:
+                nums1[k] = nums1[i]
+                i -= 1
+            else:
+                nums1[k] = nums2[j]
+                j -= 1
+            k -= 1
+        while j &gt;= 0:
+            nums1[k] = nums2[j]
+            j -= 1
+            k -= 1</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(m + n)
+- <strong>Space Complexity:</strong> O(1)
+
+</details>
+
+<p></details></p>
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Move Zeroes - </strong><a href="https://leetcode.com/problems/move-zeroes/" target="_blank">#283</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: List of integers with zeroes (e.g., <code>[0,1,0,3,12]</code>)
+
+---
+
+### 📤 Output
+
+- Rearranged list where all 0s are moved to the end, maintaining the order of non-zero elements.
+
+---
+
+### ✅ Example
+
+<code>py
+Input: nums = [0,1,0,3,12]
+Output: [1,3,12,0,0]</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>py
+class Solution:
+    def moveZeroes(self, nums: List[int]) -&gt; None:
+        insert_pos = 0
+        for num in nums:
+            if num != 0:
+                nums[insert_pos] = num
+                insert_pos += 1
+        while insert_pos &lt; len(nums):
+            nums[insert_pos] = 0
+            insert_pos += 1</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n)
+- <strong>Space Complexity:</strong> O(1)
+
+</details>
+
+<p></details></p>
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Valid Mountain Array - </strong><a href="https://leetcode.com/problems/valid-mountain-array/" target="_blank">#941</a></span></summary>
+
+### 🧾 Input
+
+- <code>arr</code>: List of integers representing elevation (e.g., <code>[0,3,2,1]</code>)
+
+---
+
+### 📤 Output
+
+- Boolean indicating whether it&#39;s a valid mountain array.
+
+---
+
+### ✅ Example
+
+<code>py
+Input: arr = [0,3,2,1]
+Output: True
+
+Explanation: Strictly increasing then strictly decreasing.</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>py
+class Solution:
+    def validMountainArray(self, arr: List[int]) -&gt; bool:
+        n = len(arr)
+        if n &lt; 3:
+            return False
+        i = 0
+        while i + 1 &lt; n and arr[i] &lt; arr[i + 1]:
+            i += 1
+        if i == 0 or i == n - 1:
+            return False
+        while i + 1 &lt; n and arr[i] &gt; arr[i + 1]:
+            i += 1
+        return i == n - 1</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n)
+- <strong>Space Complexity:</strong> O(1)
+
+</details>
+
+<p></details></p>
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Third Maximum Number - </strong><a href="https://leetcode.com/problems/third-maximum-number/" target="_blank">#414</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: List of integers (e.g., <code>[3,2,1]</code>)
+
+---
+
+### 📤 Output
+
+- The third distinct maximum number. If it does not exist, return the maximum number.
+
+---
+
+### ✅ Example
+
+<code>py
+Input: nums = [3,2,1]
+Output: 1
+
+Explanation: Third distinct max is 1</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>py
+class Solution:
+    def thirdMax(self, nums: List[int]) -&gt; int:
+        distinct = list(set(nums))
+        if len(distinct) &lt; 3:
+            return max(distinct)
+        distinct.sort(reverse=True)
+        return distinct[2]</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n log n) due to sorting
+- <strong>Space Complexity:</strong> O(n) to store distinct elements
+
+</details>
+
+<p></details></p>
+<hr>
+<h2 id="-medium">🟡 Medium</h2>
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>3Sum - </strong><a href="https://leetcode.com/problems/3sum/" target="_blank">#15</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: List of integers (e.g., <code>[-1,0,1,2,-1,-4]</code>)
+
+  ---
+
+### 📤 Output
+
+- All unique triplets <code>[nums[i], nums[j], nums[k]]</code> such that they sum to 0.
+
+  ---
+
+### ✅ Example
+
+  <code>py
+  Input: nums = [-1,0,1,2,-1,-4]
+  Output: [[-1,-1,2],[-1,0,1]]</code>
+
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+
+  <code>py
+  class Solution:
+      def threeSum(self, nums: List[int]) -&gt; List[List[int]]:
+          nums.sort()
+          result = []
+          for i in range(len(nums)-2):
+              if i &gt; 0 and nums[i] == nums[i-1]:
+                  continue
+              left, right = i+1, len(nums)-1
+              while left &lt; right:
+                  total = nums[i] + nums[left] + nums[right]
+                  if total &lt; 0:
+                      left += 1
+                  elif total &gt; 0:
+                      right -= 1
+                  else:
+                      result.append([nums[i], nums[left], nums[right]])
+                      while left &lt; right and nums[left] == nums[left+1]:
+                          left += 1
+                      while left &lt; right and nums[right] == nums[right-1]:
+                          right -= 1
+                      left += 1
+                      right -= 1
+          return result</code>
+
+  </details>
+
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n²)
+- <strong>Space Complexity:</strong> O(1) (excluding output)
+
+  </details>
+
+<p>  </details></p>
+<hr>
+  <details>
+    <summary><span style="font-size:19px;"><strong>Container With Most Water - </strong><a href="https://leetcode.com/problems/container-with-most-water/" target="_blank">#11</a></span></summary>
+
+### 🧾 Input
+
+- <code>height</code>: List of non-negative integers representing vertical lines
+
+  ---
+
+### 📤 Output
+
+- Maximum area of water a container can store.
+
+  ---
+
+### ✅ Example
+
+  <code>py
+  Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+
+Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. 
+In this case, the max area of water (blue section) the container can contain is 49.</code>
+
+  <img src="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg" alt="alt text">
+
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+
+  <code>py
+  class Solution:
+      def maxArea(self, height: List[int]) -&gt; int:
+          left, right = 0, len(height) - 1
+          max_area = 0
+          while left &lt; right:
+              width = right - left
+              max_area = max(max_area, width * min(height[left], height[right]))
+              if height[left] &lt; height[right]:
+                  left += 1
+              else:
+                  right -= 1
+          return max_area</code>
+
+  </details>
+
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n)
+- <strong>Space Complexity:</strong> O(1)
+
+  </details>
+
+<p>  </details></p>
+<hr>
+  <details>
+    <summary><span style="font-size:19px;"><strong>Product of Array Except Self - </strong><a href="https://leetcode.com/problems/product-of-array-except-self/" target="_blank">#238</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: List of integers (e.g., <code>[1,2,3,4]</code>)
+
+  ---
+
+### 📤 Output
+
+- A list where each element is the product of all other elements except itself.
+
+  ---
+
+### ✅ Example
+
+  <code>py
+  Input: nums = [1,2,3,4]
+  Output: [24,12,8,6]</code>
+
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+
+  <code>py
+  class Solution:
+      def productExceptSelf(self, nums: List[int]) -&gt; List[int]:
+          n = len(nums)
+          res = [1] * n
+          left = 1
+          for i in range(n):
+              res[i] = left
+              left *= nums[i]
+          right = 1
+          for i in range(n-1, -1, -1):
+              res[i] *= right
+              right *= nums[i]
+          return res</code>
+
+  </details>
+
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n)
+- <strong>Space Complexity:</strong> O(1) (excluding output)
+
+  </details>
+
+<p>  </details></p>
+<hr>
+  <details>
+    <summary><span style="font-size:19px;"><strong>Set Matrix Zeroes - </strong><a href="https://leetcode.com/problems/set-matrix-zeroes/" target="_blank">#73</a></span></summary>
+
+### 🧾 Input
+
+- <code>matrix</code>: 2D list of integers
+
+  ---
+
+### 📤 Output
+
+- Modify matrix in-place to set entire row and column to 0 if an element is 0.
+
+  ---
+
+### ✅ Example
+
+  <code>py
+  Input: matrix = [[1,1,1],[1,0,1],[1,1,1]]
+  Output: [[1,0,1],[0,0,0],[1,0,1]]</code>
+
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+
+  <code>py
+  class Solution:
+      def setZeroes(self, matrix: List[List[int]]) -&gt; None:
+          rows, cols = len(matrix), len(matrix[0])
+          first_row_has_zero = any(matrix[0][j] == 0 for j in range(cols))
+          first_col_has_zero = any(matrix[i][0] == 0 for i in range(rows))
+
+          for i in range(1, rows):
+              for j in range(1, cols):
+                  if matrix[i][j] == 0:
+                      matrix[i][0] = matrix[0][j] = 0
+
+          for i in range(1, rows):
+              for j in range(1, cols):
+                  if matrix[i][0] == 0 or matrix[0][j] == 0:
+                      matrix[i][j] = 0
+
+          if first_row_has_zero:
+              for j in range(cols):
+                  matrix[0][j] = 0
+
+          if first_col_has_zero:
+              for i in range(rows):
+                  matrix[i][0] = 0</code>
+
+  </details>
+
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(m × n)
+- <strong>Space Complexity:</strong> O(1)
+
+  </details>
+
+<p>  </details></p>
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Subarray Sum Equals K - </strong><a href="https://leetcode.com/problems/subarray-sum-equals-k/" target="_blank">#560</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: List of integers
+- <code>k</code>: Integer
+
+---
+
+### 📤 Output
+
+- Return the total number of continuous subarrays whose sum equals <code>k</code>.
+
+---
+
+### ✅ Example
+
+<code>py
+Input: nums = [1,1,1], k = 2
+Output: 2</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>py
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -&gt; int:
+        count = 0
+        current_sum = 0
+        prefix_sums = {0: 1}
+        for num in nums:
+            current_sum += num
+            count += prefix_sums.get(current_sum - k, 0)
+            prefix_sums[current_sum] = prefix_sums.get(current_sum, 0) + 1
+        return count</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n)
+- <strong>Space Complexity:</strong> O(n)
+
+</details>
+
+<p></details></p>
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Spiral Matrix - </strong><a href="https://leetcode.com/problems/spiral-matrix/" target="_blank">#54</a></span></summary>
+
+### 🧾 Input
+
+- <code>matrix</code>: 2D list of integers
+
+---
+
+### 📤 Output
+
+- Return all elements of the matrix in spiral order.
+
+---
+
+### ✅ Example
+
+<code>py
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,3,6,9,8,7,4,5]</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>py
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -&gt; List[int]:
+        res = []
+        while matrix:
+            res += matrix.pop(0)
+            if matrix and matrix[0]:
+                for row in matrix:
+                    res.append(row.pop())
+            if matrix:
+                res += matrix.pop()[::-1]
+            if matrix and matrix[0]:
+                for row in matrix[::-1]:
+                    res.append(row.pop(0))
+        return res</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(m × n)
+- <strong>Space Complexity:</strong> O(1) (excluding output)
+
+</details>
+
+<p></details></p>
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Sort Colors (Dutch National Flag) - </strong><a href="https://leetcode.com/problems/sort-colors/" target="_blank">#75</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: List of integers with values <code>0</code>, <code>1</code>, or <code>2</code>
+
+---
+
+### 📤 Output
+
+- Sort the array in-place so that elements of the same color are adjacent and in the order <code>0</code>, <code>1</code>, <code>2</code>.
+
+---
+
+### ✅ Example
+
+<code>py
+Input: nums = [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>py
+class Solution:
+    def sortColors(self, nums: List[int]) -&gt; None:
+        low, mid, high = 0, 0, len(nums) - 1
+        while mid &lt;= high:
+            if nums[mid] == 0:
+                nums[low], nums[mid] = nums[mid], nums[low]
+                low += 1
+                mid += 1
+            elif nums[mid] == 1:
+                mid += 1
+            else:
+                nums[mid], nums[high] = nums[high], nums[mid]
+                high -= 1</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n)
+- <strong>Space Complexity:</strong> O(1)
+
+</details>
+
+<p></details></p>
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Insert Interval - </strong><a href="https://leetcode.com/problems/insert-interval/" target="_blank">#57</a></span></summary>
+
+### 🧾 Input
+
+- <code>intervals</code>: List of intervals sorted by start time
+- <code>newInterval</code>: Interval to insert
+
+---
+
+### 📤 Output
+
+- Merge <code>newInterval</code> and return the new list of intervals.
+
+---
+
+### ✅ Example
+
+<code>py
+Input: intervals = [[1,3],[6,9]], newInterval = [2,5]
+Output: [[1,5],[6,9]]</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>py
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -&gt; List[List[int]]:
+        res = []
+        for i in intervals:
+            if i[1] &lt; newInterval[0]:
+                res.append(i)
+            elif newInterval[1] &lt; i[0]:
+                res.append(newInterval)
+                newInterval = i
+            else:
+                newInterval[0] = min(newInterval[0], i[0])
+                newInterval[1] = max(newInterval[1], i[1])
+        res.append(newInterval)
+        return res</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n)
+- <strong>Space Complexity:</strong> O(n)
+
+</details>
+
+<p></details></p>
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Find All Duplicates in an Array - </strong><a href="https://leetcode.com/problems/find-all-duplicates-in-an-array/" target="_blank">#442</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: List of integers where each integer is in the range <code>[1, n]</code> and appears once or twice
+
+---
+
+### 📤 Output
+
+- Return all elements that appear twice.
+
+---
+
+### ✅ Example
+
+<code>py
+Input: nums = [4,3,2,7,8,2,3,1]
+Output: [2,3]</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>py
+class Solution:
+    def findDuplicates(self, nums: List[int]) -&gt; List[int]:
+        res = []
+        for num in nums:
+            index = abs(num) - 1
+            if nums[index] &lt; 0:
+                res.append(abs(num))
+            else:
+                nums[index] *= -1
+        return res</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n)
+- <strong>Space Complexity:</strong> O(1) (excluding output)
+
+</details>
+
+<p></details></p>
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Maximum Product Subarray - </strong><a href="https://leetcode.com/problems/maximum-product-subarray/" target="_blank">#152</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: List of integers
+
+---
+
+### 📤 Output
+
+- Return the maximum product of a contiguous subarray.
+
+---
+
+### ✅ Example
+
+<code>py
+Input: nums = [2,3,-2,4]
+Output: 6</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>py
+class Solution:
+    def maxProduct(self, nums: List[int]) -&gt; int:
+        res = max(nums)
+        curr_min, curr_max = 1, 1
+        for num in nums:
+            if num == 0:
+                curr_min, curr_max = 1, 1
+                continue
+            temp = curr_max * num
+            curr_max = max(num * curr_max, num * curr_min, num)
+            curr_min = min(temp, num * curr_min, num)
+            res = max(res, curr_max)
+        return res</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n)
+- <strong>Space Complexity:</strong> O(1)
+
+</details>
+
+<p></details></p>
+<hr>
+<h2 id="-hard">🔴 Hard</h2>
+<details>
+  <summary><span style="font-size:19px;"><strong>First Missing Positive - </strong><a href="https://leetcode.com/problems/first-missing-positive/" target="_blank">#41</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: List of integers
+
+### 📤 Output
+
+- Smallest missing positive integer
+
+### ✅ Example
+
+<code>py
+Input: nums = [3, 4, -1, 1]
+Output: 2</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>python
+class Solution:
+    def firstMissingPositive(self, nums):
+        n = len(nums)
+        for i in range(n):
+            while 1 &lt;= nums[i] &lt;= n and nums[nums[i] - 1] != nums[i]:
+                nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
+        for i in range(n):
+            if nums[i] != i + 1:
+                return i + 1
+        return n + 1</code>
+
+</details>
+
+  <details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+  <strong>Time Complexity:</strong> O(n)
+  <strong>Space Complexity:</strong> O(1)
+
+</details>
+</details>
+
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Trapping Rain Water - </strong><a href="https://leetcode.com/problems/trapping-rain-water/" target="_blank">#42</a></span></summary>
+
+### 🧾 Input
+
+- <code>height</code>: List of non-negative integers
+
+### 📤 Output
+
+- Total amount of trapped water
+
+### ✅ Example
+
+<code>py
+Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>python
+class Solution:
+    def trap(self, height):
+        left, right = 0, len(height) - 1
+        left_max = right_max = 0
+        res = 0
+        while left &lt; right:
+            if height[left] &lt; height[right]:
+                if height[left] &gt;= left_max:
+                    left_max = height[left]
+                else:
+                    res += left_max - height[left]
+                left += 1
+            else:
+                if height[right] &gt;= right_max:
+                    right_max = height[right]
+                else:
+                    res += right_max - height[right]
+                right -= 1
+        return res</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n)
+- <strong>Space Complexity:</strong> O(1)
+
+</details>
+</details>
+
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Sliding Window Maximum - </strong><a href="https://leetcode.com/problems/sliding-window-maximum/" target="_blank">#239</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: List of integers
+- <code>k</code>: Size of the window
+
+### 📤 Output
+
+- Maximum of each sliding window
+
+### ✅ Example
+
+<code>py
+Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+Output: [3,3,5,5,6,7]</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>python
+from collections import deque
+
+class Solution:
+    def maxSlidingWindow(self, nums, k):
+        q = deque()
+        res = []
+        for i in range(len(nums)):
+            while q and q[0] &lt; i - k + 1:
+                q.popleft()
+            while q and nums[q[-1]] &lt; nums[i]:
+                q.pop()
+            q.append(i)
+            if i &gt;= k - 1:
+                res.append(nums[q[0]])
+        return res</code>
+
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n)
+- <strong>Space Complexity:</strong> O(k)
+
+</details>
+</details>
+
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Merge k Sorted Arrays</strong> (Variation of <a href="https://leetcode.com/problems/merge-k-sorted-lists/" target="_blank">#23</a>)</span></summary>
+
+### 🧾 Input
+
+- <code>arrays</code>: List of k sorted arrays
+
+### 📤 Output
+
+- Single merged sorted array
+
+### ✅ Example
+
+<code>py
+Input: arrays = [[1,4,5],[1,3,4],[2,6]]
+Output: [1,1,2,3,4,4,5,6]</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>python
+import heapq
+
+class Solution:
+    def mergeKArrays(self, arrays):
+        heap = []
+        for i, arr in enumerate(arrays):
+            if arr:
+                heapq.heappush(heap, (arr[0], i, 0))
+        res = []
+        while heap:
+            val, list_idx, element_idx = heapq.heappop(heap)
+            res.append(val)
+            if element_idx + 1 &lt; len(arrays[list_idx]):
+                next_tuple = (arrays[list_idx][element_idx + 1], list_idx, element_idx + 1)
+                heapq.heappush(heap, next_tuple)
+        return res</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(N log k)
+- <strong>Space Complexity:</strong> O(k)
+  <em>(N = total number of elements)</em>
+
+</details>
+</details>
+
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Minimum Number of Swaps to Sort</strong> (Common Interview Question)</span></summary>
+
+### 🧾 Input
+
+- <code>arr</code>: List of integers
+
+### 📤 Output
+
+- Minimum number of swaps to sort
+
+### ✅ Example
+
+<code>py
+Input: arr = [4, 3, 2, 1]
+Output: 2</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>python
+class Solution:
+    def minSwaps(self, arr):
+        n = len(arr)
+        arrpos = list(enumerate(arr))
+        arrpos.sort(key=lambda it: it[1])
+        vis = [False] * n
+        ans = 0
+        for i in range(n):
+            if vis[i] or arrpos[i][0] == i:
+                continue
+            cycle_size = 0
+            j = i
+            while not vis[j]:
+                vis[j] = True
+                j = arrpos[j][0]
+                cycle_size += 1
+            if cycle_size &gt; 0:
+                ans += cycle_size - 1
+        return ans</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n log n)
+- <strong>Space Complexity:</strong> O(n)
+
+</details>
+</details>
+
+<hr>
+<details>
+  <summary><span style="font-size:19px;"><strong>Maximum Gap - </strong><a href="https://leetcode.com/problems/maximum-gap/" target="_blank">#164</a></span></summary>
+
+### 🧾 Input
+
+- <code>nums</code>: List of integers
+
+### 📤 Output
+
+- Maximum difference between successive elements after sorting
+
+### ✅ Example
+
+<code>py
+Input: nums = [3,6,9,1]
+Output: 3</code>
+
+<details>
+  <summary><strong>Solution Code</strong></summary>
+
+<code>python
+class Solution:
+    def maximumGap(self, nums):
+        if len(nums) &lt; 2:
+            return 0
+        nums.sort()
+        max_gap = 0
+        for i in range(1, len(nums)):
+            max_gap = max(max_gap, nums[i] - nums[i - 1])
+        return max_gap</code>
+
+</details>
+
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+
+- <strong>Time Complexity:</strong> O(n log n)
+- <strong>Space Complexity:</strong> O(1)
+
+</details>
+</details>
+
+<hr>
