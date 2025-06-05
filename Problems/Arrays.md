@@ -35,7 +35,7 @@
   <details>
       <summary><strong>Solution Code</strong></summary>
 
-    ```py
+  ```py
     class Solution:
         def twoSum(self, nums: List[int], target: int) -> List[int]:
             has = {}
@@ -43,7 +43,7 @@
                 if target - num in has:
                     return has[target - num], i
                 has[num] = i
-    ```
+  ```
 
   </details>
 
