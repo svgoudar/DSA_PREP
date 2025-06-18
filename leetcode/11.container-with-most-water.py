@@ -7,6 +7,16 @@
 # @lc code=start
 class Solution:
     def maxArea(self, height: List[int]) -> int:
+        left,right = 0,len(height) -1
+
+        while left < right:
+            
+   
+
+
+
+            
+
         
 # @lc code=end
-dsd
+
