@@ -1,8 +1,8 @@
 
 format: jb-book
-root: intro
+root: problems/overview
 parts:
 - chapters:
-  - file: problems/overview
-    sections:
-    - glob: problems/*
+  # - file: problems/overview
+  #   sections:
+  - glob: problems/*part

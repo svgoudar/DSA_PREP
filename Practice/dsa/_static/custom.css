@@ -1,0 +1,189 @@
+ a {
+    word-wrap: break-word;
+    color: var(--pst-color-text-muted);
+} 
+
+a:visited {
+    color: var(--pst-color-text-muted);
+}
+
+
+
+a.reference.internal {
+  text-decoration: none !important;
+  color: var(--pst-color-text-muted);
+}
+
+a.reference.internal:hover {
+    color: var(--pst-color-link-hover);
+    text-decoration-skip-ink: none;
+    text-decoration-thickness: max(3px, .1875rem, .12em);
+}
+
+
+.grid-center {
+  text-align: center;
+}
+
+/* Enlarge the grid card */
+.sd-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease-in-out;
+  min-height: 100px;   /* makes card taller */
+  min-width: 150px;    /* makes card wider */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centers content vertically */
+}
+
+/* Hover effect */
+.sd-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Header color (auto light/dark) */
+.bg-grid-header {
+  background-color: var(--pst-color-surface);  /* adapts to theme */
+  color: var(--pst-color-primary);
+  font-weight: bold;
+  text-align: center;
+  padding: 0.5rem;
+  border-bottom: 2px solid var(--pst-color-primary);
+}
+
+/* Body color (auto light/dark) */
+.bg-grid-body {
+  background-color: var(--pst-color-background);
+  color: var(--pst-color-text-base);
+  padding: 0.8rem;
+}
+
+/* Accent text style */
+
+
+/* ============================
+   General Markdown Styling
+   ============================ */
+div.text_cell_render {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333333;
+}
+
+/* Headings */
+div.text_cell_render h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2.2em;
+    color: #1F2937;
+    margin-bottom: 0.5em;
+}
+div.text_cell_render h2 {
+    font-size: 1.8em;
+    margin-bottom: 0.5em;
+}
+div.text_cell_render h3 {
+    font-size: 1.4em;
+    margin-bottom: 0.4em;
+}
+
+/* ============================
+   Code Cell Styling
+   ============================ */
+div.input_area {
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+/* Output Cells */
+div.output_area pre {
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #111827;
+}
+
+/* ============================
+   Grid & Card Styling
+   ============================ */
+.grid-item-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.grid-item-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Header in card */
+.grid-item-card .grid-header {
+    padding: 0.8rem 1rem;
+    font-weight: 600;
+    font-size: 1.1em;
+    color: #FFFFFF;
+}
+
+/* Body in card */
+.grid-item-card .grid-body {
+    padding: 1rem;
+    font-size: 0.95em;
+    color: #1F2937;
+    background-color: #F3F4F6;
+}
+
+/* Grid Title */
+.grid-title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 0.3em;
+    font-size: 1.1rem;
+    color: #356f99;;
+}
+
+/* Grid Subtitle */
+.grid-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+    color: #4B5563;
+}
+
+/* ============================
+   Links & Hover
+   ============================ */
+
+
+/* ============================
+   Footnotes
+   ============================ */
+.footnote {
+    font-size: 0.85em;
+    color: #6B7280;
+}
+
+a.colab-badge img {
+  content: url("_static/colab-icon.svg");
+  width: 32px;
+  height: 32px;
+}
+
+/* Make main content container full width */
+.bd-content {
+    max-width: 100% !important;
+    padding-left: 20px;   /* optional padding */
+    padding-right: 20px;
+}
+
+/* Optional: remove sidebar width limit */
+.bd-sidebar {
+    max-width: 300px;
+}

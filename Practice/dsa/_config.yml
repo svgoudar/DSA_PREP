@@ -1,14 +1,18 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: My sample book
-author: The Jupyter Book Community
+title: Machine Learning Handbook
+author: svgoudar
 logo: logo.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: 'off'
+  execute_notebooks: "off"
+
+launch_buttons:
+  colab_url: "https://colab.research.google.com"
+  notebook_interface: "classic"
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -21,8 +25,7 @@ bibtex_bibfiles:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/executablebooks/jupyter-book  # Online location of your book
-  path_to_book: docs  # Optional path to your book, relative to the repository root
+  url: https://github.com/svgoudar/AI-ML-Essentials  # Online location of your book
   branch: master  # Which branch of the repository should be used when creating links (optional)
 
 # Add GitHub buttons to your book
@@ -30,3 +33,131 @@ repository:
 html:
   use_issues_button: true
   use_repository_button: true
+  extra_css:
+    -  _static/custom.css
+  theme:
+    name: sphinx_book_theme
+    options:
+      wide: true
+      logo_only: false
+      collapse_navigation: true
+      sticky_navigation: true
+      prev_next_buttons_location: both
+      home_page_in_toc: true
+      use_fullscreen_button: true
+      use_download_button: true
+      announcement: ""                # Top banner for announcements
+      use_sidenotes: true            # Margin notes
+      show_toc_level: 3               # How deep to show TOC
+      search_bar_text: "Search..."
+
+sphinx:
+  recursive_update: true
+  config:
+    html_theme_options:
+      page_width: "100%"     # expands content
+      content_width: "100%"  # expands article tex
+      use_edit_page_button: True
+      use_repository_button: True
+      use_issues_button: True
+      navigation_depth: 4   # how many heading levels to show
+      collapse_navigation: True
+      rightsidebar: False   # keep sidebar on left
+      # 👇 THIS controls RHS contents
+      show_navbar_depth: 4
+      show_toc_level: 4     
+    myst_enable_extensions:
+      - colon_fence
+      - deflist
+      - dollarmath
+      - linkify
+      - substitution
+    bibtex_reference_style: author_year # or label, super, \supercite
+    # unknown_mime_type - application/vnd.plotly.v1+json and application/vnd.bokehjs_load.v0+json
+    # domains - sphinx_proof.domain::prf needs to have `resolve_any_xref` method
+    # mime_priority - latex priority not set in myst_nb for text/html, application/javascript
+    suppress_warnings:
+      ["mystnb.unknown_mime_type", "myst.domains", "mystnb.mime_priority"]
+    copybutton_prompt_text: "$"
+    nb_execution_show_tb: True
+    nb_execution_timeout: 120
+    html_extra_path:
+      - images/badge.svg
+    intersphinx_mapping:
+      ebp:
+        - "https://executablebooks.org/en/latest/"
+        - null
+      myst-parser:
+        - "https://myst-parser.readthedocs.io/en/latest/"
+        - null
+      myst-nb:
+        - "https://myst-nb.readthedocs.io/en/latest/"
+        - null
+      sphinx:
+        - "https://www.sphinx-doc.org/en/master"
+        - null
+      nbformat:
+        - "https://nbformat.readthedocs.io/en/latest"
+        - null
+      sd:
+        - https://sphinx-design.readthedocs.io/en/latest
+        - null
+    language: en
+    latex_elements:
+      sphinxsetup: "iconpackage=fontawesome"
+      preamble: |
+        \newcommand\N{\mathbb{N}}
+        \newcommand\floor[1]{\lfloor#1\rfloor}
+        \newcommand{\bmat}{\left[\begin{array}}
+        \newcommand{\emat}{\end{array}\right]}
+    # TODO: #917 this path will be the default in sphinx v4
+    # mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+    # However, it is incompatible with the mathjax config below for macros
+    mathjax3_config:
+      tex:
+        macros:
+          "N": "\\mathbb{N}"
+          "floor": ["\\lfloor#1\\rfloor", 1]
+          "bmat": ["\\left[\\begin{array}"]
+          "emat": ["\\end{array}\\right]"]
+    nb_custom_formats:
+      .Rmd:
+        - jupytext.reads
+        - fmt: Rmd
+    rediraffe_branch: "master"
+    sd_fontawesome_latex: True
+
+    html_theme_options:
+      navigation_with_keys: false
+
+  # extra_extensions:
+  #   - sphinx_click.ext
+  #   - sphinx_inline_tabs
+  #   - sphinxext.rediraffe
+  #   - sphinx_proof
+  #   - sphinx_examples
+  #   - sphinx_togglebutton
+  #   - sphinx_design
+  #   - sphinx_copybutton
+  #   - hoverxref.extension
+  #   - sphinx_sitemap
+
+# extra_extensions:
+#     - sphinx_click.ext
+#     - sphinx_inline_tabs
+#     - sphinxext.rediraffe
+#     - sphinx_proof
+#     - sphinx_examples
+#     - sphinx_togglebutton
+#     - sphinx_design
+#     - sphinx_copybutton
+#     - hoverxref.extension
+#     - sphinx_sitemap
+# hoverxref_role_types:
+#   ref: tooltip
+#   numref: tooltip
+#   term: tooltip
+
+# hoverxref_auto_ref: true
+# hoverxref_domains: ["std"]
+# hoverxref_roles: ["ref", "term"]
