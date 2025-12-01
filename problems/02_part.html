@@ -1,0 +1,2236 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Strings &#8212; Machine Learning Handbook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'problems/02_part';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Linked Lists" href="03_part.html" />
+    <link rel="prev" title="Arrays/List" href="01_part.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="overview.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Machine Learning Handbook - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Machine Learning Handbook - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="overview.html">
+                    Data Structure & Algorithm
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_part.html">Arrays/List</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Strings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_part.html">Linked Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_part.html">Stacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_part.html">Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_part.html">Tree/Graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_part.html">Hashing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_part.html">Sorting Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_part.html">Searching Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_part.html">Divide &amp; Conquer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_part.html">Greedy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_part.html">Sliding Window</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_part.html">Two Pointers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_part.html">Prefix Sum / Pointer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_part.html">Dynamic Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_part.html">Backtracking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_part.html">Bit Manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_part.html">Brute Force</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/svgoudar/AI-ML-Essentials/blob/master/problems/02_part.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/svgoudar/AI-ML-Essentials" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/svgoudar/AI-ML-Essentials/issues/new?title=Issue%20on%20page%20%2Fproblems/02_part.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/problems/02_part.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Strings</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#easy">Easy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#valid-anagram-242">Valid Anagram - #242</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implement-strstr-28">Implement strStr() - #28</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reverse-string-344">Reverse String - #344</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reverse-words-in-a-string-iii-557">Reverse Words in a String III - #557</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detect-capital-520">Detect Capital - #520</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goat-latin-824">Goat Latin - #824</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#to-lower-case-709">To Lower Case - #709</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#valid-palindrome-125">Valid Palindrome - #125</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#long-pressed-name-925">Long Pressed Name - #925</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#count-and-say-38">Count and Say - #38</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#medium">Medium</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-anagrams-49">Group Anagrams - #49</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#longest-substring-without-repeating-characters-3">Longest Substring Without Repeating Characters - #3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#longest-palindromic-substring-5">Longest Palindromic Substring - #5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#permutation-in-string-567">Permutation in String - #567</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#input">🔢 Input</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output">📤 Output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">✅ Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-all-adjacent-duplicates-in-string-ii-1209">Remove All Adjacent Duplicates in String II - #1209</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiply-strings-43">Multiply Strings - #43</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#word-pattern-290">Word Pattern - #290</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-subsequence-392">Is Subsequence - #392</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reverse-words-in-a-string-151">Reverse Words in a String - #151</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-sort-string-791">Custom Sort String - #791</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hard">Hard</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wildcard-matching-44">Wildcard Matching - #44</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-expression-matching-10">Regular Expression Matching - #10</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-window-substring-76">Minimum Window Substring - #76</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#palindrome-pairs-336">Palindrome Pairs - #336</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#word-ladder-ii-126">Word Ladder II - #126</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-calculator-224">Basic Calculator - #224</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-invalid-parentheses-301">Remove Invalid Parentheses - #301</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scramble-string-87">Scramble String - #87</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distinct-subsequences-115">Distinct Subsequences - #115</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-stream-as-disjoint-intervals-352">Data Stream as Disjoint Intervals - #352</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="strings">
+<h1>Strings<a class="headerlink" href="#strings" title="Permalink to this heading">#</a></h1>
+<section id="easy">
+<h2>Easy<a class="headerlink" href="#easy" title="Permalink to this heading">#</a></h2>
+<section id="valid-anagram-242">
+<h3>Valid Anagram - <a class="reference external" href="https://leetcode.com/problems/valid-anagram/">#242</a><a class="headerlink" href="#valid-anagram-242" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: A string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;anagram&quot;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: Another string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;nagaram&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Boolean value <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">t</span></code> is an anagram of <code class="docutils literal notranslate"><span class="pre">s</span></code>, else <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;anagram&quot;</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="s2">&quot;nagaram&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+
+<span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;rat&quot;</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="s2">&quot;car&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">False</span>
+
+<span class="n">Explanation</span><span class="p">:</span> <span class="n">An</span> <span class="n">Anagram</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">word</span> <span class="ow">or</span> <span class="n">phrase</span> <span class="n">formed</span> <span class="n">by</span> <span class="n">rearranging</span> <span class="n">the</span> <span class="n">letters</span> <span class="n">of</span> <span class="n">a</span> <span class="n">different</span> <span class="n">word</span> <span class="ow">or</span> <span class="n">phrase</span><span class="o">.</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isAnagram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type s: str</span>
+<span class="sd">        :type t: str</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">!=</span> <span class="n">t</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O(n)</p></li>
+<li><p><strong>Space Complexity:</strong> O(1)</p>
+</details></li>
+</ul>
+</section>
+<section id="implement-strstr-28">
+<h3>Implement strStr() - <a class="reference external" href="https://leetcode.com/problems/implement-strstr/">#28</a><a class="headerlink" href="#implement-strstr-28" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">haystack</span></code>: A string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;hello&quot;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">needle</span></code>: A string to find within <code class="docutils literal notranslate"><span class="pre">haystack</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;ll&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>An integer representing the index of the first occurrence of <code class="docutils literal notranslate"><span class="pre">needle</span></code> in <code class="docutils literal notranslate"><span class="pre">haystack</span></code>, or <code class="docutils literal notranslate"><span class="pre">-1</span></code> if not found.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">haystack</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">needle</span> <span class="o">=</span> <span class="s2">&quot;ll&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">2</span>
+
+<span class="n">Input</span><span class="p">:</span> <span class="n">haystack</span> <span class="o">=</span> <span class="s2">&quot;aaaaa&quot;</span><span class="p">,</span> <span class="n">needle</span> <span class="o">=</span> <span class="s2">&quot;bba&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="n">Explanation</span><span class="p">:</span> <span class="n">Return</span> <span class="n">the</span> <span class="n">index</span> <span class="n">of</span> <span class="n">the</span> <span class="n">first</span> <span class="n">occurrence</span> <span class="n">of</span> <span class="n">needle</span> <span class="ow">in</span> <span class="n">haystack</span><span class="p">,</span> <span class="ow">or</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">needle</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">part</span> <span class="n">of</span> <span class="n">haystack</span><span class="o">.</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">strStr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">haystack</span><span class="p">,</span> <span class="n">needle</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">haystack</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">needle</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">haystack</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">needle</span><span class="p">)]</span> <span class="o">==</span> <span class="n">needle</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">i</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O((n - m + 1) × m)</p></li>
+<li><p><strong>Space Complexity:</strong> O(1)</p>
+</details></li>
+</ul>
+</section>
+<section id="reverse-string-344">
+<h3>Reverse String - <a class="reference external" href="https://leetcode.com/problems/reverse-string/">#344</a><a class="headerlink" href="#reverse-string-344" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: List of characters (e.g., <code class="docutils literal notranslate"><span class="pre">[&quot;h&quot;,&quot;e&quot;,&quot;l&quot;,&quot;l&quot;,&quot;o&quot;]</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>The same list <code class="docutils literal notranslate"><span class="pre">s</span></code> should be modified in-place to reverse the characters.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;h&quot;</span><span class="p">,</span><span class="s2">&quot;e&quot;</span><span class="p">,</span><span class="s2">&quot;l&quot;</span><span class="p">,</span><span class="s2">&quot;l&quot;</span><span class="p">,</span><span class="s2">&quot;o&quot;</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="s2">&quot;l&quot;</span><span class="p">,</span><span class="s2">&quot;l&quot;</span><span class="p">,</span><span class="s2">&quot;e&quot;</span><span class="p">,</span><span class="s2">&quot;h&quot;</span><span class="p">]</span>
+
+<span class="n">Explanation</span><span class="p">:</span> <span class="n">Reverse</span> <span class="n">the</span> <span class="n">array</span> <span class="n">of</span> <span class="n">characters</span> <span class="ow">in</span><span class="o">-</span><span class="n">place</span><span class="o">.</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reverseString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Do not return anything, modify s in-place instead.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">s</span><span class="p">[</span><span class="n">left</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">right</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">left</span><span class="p">]</span>
+            <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">right</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O(n)</p></li>
+<li><p><strong>Space Complexity:</strong> O(1)</p>
+</details></li>
+</ul>
+</section>
+<section id="reverse-words-in-a-string-iii-557">
+<h3>Reverse Words in a String III - <a class="reference external" href="https://leetcode.com/problems/reverse-words-in-a-string-iii/">#557</a><a class="headerlink" href="#reverse-words-in-a-string-iii-557" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: A sentence string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;Let's</span> <span class="pre">take</span> <span class="pre">LeetCode</span> <span class="pre">contest&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>A string with each word’s characters reversed.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Let&#39;s take LeetCode contest&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;s&#39;teL ekat edoCteeL tsetnoc&quot;</span>
+
+<span class="n">Explanation</span><span class="p">:</span> <span class="n">Reverse</span> <span class="n">the</span> <span class="n">order</span> <span class="n">of</span> <span class="n">characters</span> <span class="ow">in</span> <span class="n">each</span> <span class="n">word</span> <span class="k">while</span> <span class="n">keeping</span> <span class="n">words</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">same</span> <span class="n">order</span><span class="o">.</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reverseWords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type s: str</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O(n)</p></li>
+<li><p><strong>Space Complexity:</strong> O(n)</p>
+</details></li>
+</ul>
+</section>
+<section id="detect-capital-520">
+<h3>Detect Capital - <a class="reference external" href="https://leetcode.com/problems/detect-capital/">#520</a><a class="headerlink" href="#detect-capital-520" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">word</span></code>: A string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;USA&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;FlaG&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Boolean value indicating correct capitalization usage</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">word</span> <span class="o">=</span> <span class="s2">&quot;USA&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+
+<span class="n">Input</span><span class="p">:</span> <span class="n">word</span> <span class="o">=</span> <span class="s2">&quot;FlaG&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">False</span>
+
+<span class="n">Explanation</span><span class="p">:</span> <span class="n">Correct</span> <span class="n">usage</span> <span class="ow">is</span> <span class="nb">all</span> <span class="n">uppercase</span><span class="p">,</span> <span class="nb">all</span> <span class="n">lowercase</span><span class="p">,</span> <span class="ow">or</span> <span class="n">only</span> <span class="n">first</span> <span class="n">letter</span> <span class="n">uppercase</span><span class="o">.</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">detectCapitalUse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type word: str</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">word</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span> <span class="ow">or</span> <span class="n">word</span><span class="o">.</span><span class="n">islower</span><span class="p">()</span> <span class="ow">or</span> <span class="n">word</span><span class="o">.</span><span class="n">istitle</span><span class="p">()</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O(n)</p></li>
+<li><p><strong>Space Complexity:</strong> O(1)</p>
+</details></li>
+</ul>
+</section>
+<section id="goat-latin-824">
+<h3>Goat Latin - <a class="reference external" href="https://leetcode.com/problems/goat-latin/">#824</a><a class="headerlink" href="#goat-latin-824" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sentence</span></code>: A string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;I</span> <span class="pre">speak</span> <span class="pre">Goat</span> <span class="pre">Latin&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Transformed Goat Latin sentence</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">sentence</span> <span class="o">=</span> <span class="s2">&quot;I speak Goat Latin&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;Imaa peaksmaaa oatGmaaaa atinLmaaaaa&quot;</span>
+
+<span class="n">Explanation</span><span class="p">:</span> <span class="n">Convert</span> <span class="n">to</span> <span class="n">Goat</span> <span class="n">Latin</span><span class="p">:</span> <span class="n">vowel</span> <span class="n">words</span> <span class="n">get</span> <span class="s2">&quot;ma&quot;</span><span class="p">,</span> <span class="n">consonant</span> <span class="n">words</span> <span class="n">move</span> <span class="n">first</span> <span class="n">letter</span> <span class="n">to</span> <span class="n">end</span> <span class="o">+</span> <span class="s2">&quot;ma&quot;</span><span class="p">,</span> <span class="n">add</span> <span class="s1">&#39;a&#39;</span> <span class="n">per</span> <span class="n">word</span> <span class="n">index</span><span class="o">.</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">toGoatLatin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type S: str</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vowels</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s1">&#39;aeiouAEIOU&#39;</span><span class="p">)</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">vowels</span><span class="p">:</span>
+                <span class="n">new</span> <span class="o">=</span> <span class="n">w</span> <span class="o">+</span> <span class="s2">&quot;ma&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;ma&quot;</span>
+            <span class="n">new</span> <span class="o">+=</span> <span class="s2">&quot;a&quot;</span> <span class="o">*</span> <span class="n">i</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O(n + k²)</p></li>
+<li><p><strong>Space Complexity:</strong> O(n + k²)</p>
+</details></li>
+</ul>
+</section>
+<section id="to-lower-case-709">
+<h3>To Lower Case - <a class="reference external" href="https://leetcode.com/problems/to-lower-case/">#709</a><a class="headerlink" href="#to-lower-case-709" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: A string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;Hello&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Lowercase version of the string</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;hello&quot;</span>
+
+<span class="n">Explanation</span><span class="p">:</span> <span class="n">Convert</span> <span class="nb">all</span> <span class="n">uppercase</span> <span class="n">letters</span> <span class="n">to</span> <span class="n">lowercase</span><span class="o">.</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">toLowerCase</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type s: str</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;A&#39;</span> <span class="o">&lt;=</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="s1">&#39;Z&#39;</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O(n)</p></li>
+<li><p><strong>Space Complexity:</strong> O(n)</p>
+</details></li>
+</ul>
+</section>
+<section id="valid-palindrome-125">
+<h3>Valid Palindrome - <a class="reference external" href="https://leetcode.com/problems/valid-palindrome/">#125</a><a class="headerlink" href="#valid-palindrome-125" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: A string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;A</span> <span class="pre">man,</span> <span class="pre">a</span> <span class="pre">plan,</span> <span class="pre">a</span> <span class="pre">canal:</span> <span class="pre">Panama&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Boolean value indicating if string is a palindrome</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;A man, a plan, a canal: Panama&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+
+<span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;race a car&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">False</span>
+
+<span class="n">Explanation</span><span class="p">:</span> <span class="n">Consider</span> <span class="n">only</span> <span class="n">alphanumeric</span> <span class="n">characters</span> <span class="ow">and</span> <span class="n">ignore</span> <span class="n">cases</span><span class="o">.</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isPalindrome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type s: str</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="p">[</span><span class="n">ch</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">if</span> <span class="n">ch</span><span class="o">.</span><span class="n">isalnum</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">filtered</span> <span class="o">==</span> <span class="n">filtered</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O(n)</p></li>
+<li><p><strong>Space Complexity:</strong> O(n)</p>
+</details></li>
+</ul>
+</section>
+<section id="long-pressed-name-925">
+<h3>Long Pressed Name - <a class="reference external" href="https://leetcode.com/problems/long-pressed-name/">#925</a><a class="headerlink" href="#long-pressed-name-925" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The intended name string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;alex&quot;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">typed</span></code>: The actual typed string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;aaleex&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Boolean value — <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">typed</span></code> matches a long-pressed version of <code class="docutils literal notranslate"><span class="pre">name</span></code></p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;alex&quot;</span><span class="p">,</span> <span class="n">typed</span> <span class="o">=</span> <span class="s2">&quot;aaleex&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+
+<span class="n">Input</span><span class="p">:</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;saeed&quot;</span><span class="p">,</span> <span class="n">typed</span> <span class="o">=</span> <span class="s2">&quot;ssaaedd&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">False</span>
+
+<span class="n">Explanation</span><span class="p">:</span> <span class="n">Check</span> <span class="k">if</span> <span class="n">typed</span> <span class="n">could</span> <span class="n">result</span> <span class="kn">from</span><span class="w"> </span><span class="nn">long</span> <span class="n">presses</span> <span class="k">while</span> <span class="n">typing</span> <span class="n">name</span><span class="o">.</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isLongPressedName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">typed</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">typed</span><span class="p">)</span>
+        
+        <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">t</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="ow">and</span> <span class="n">name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">typed</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="n">i</span> <span class="o">+=</span><span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">typed</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="n">typed</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="n">j</span> <span class="o">+=</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">i</span> <span class="o">==</span> <span class="n">n</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O(n + m)</p></li>
+<li><p><strong>Space Complexity:</strong> O(1)</p>
+</details></li>
+</ul>
+</section>
+<section id="count-and-say-38">
+<h3>Count and Say - <a class="reference external" href="https://leetcode.com/problems/count-and-say/">#38</a><a class="headerlink" href="#count-and-say-38" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: Integer (e.g., <code class="docutils literal notranslate"><span class="pre">4</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">n</span></code>th string in the count-and-say sequence</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;1211&quot;</span>
+
+<span class="n">Explanation</span><span class="p">:</span>
+<span class="n">term1</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+<span class="n">term2</span> <span class="o">=</span> <span class="s2">&quot;11&quot;</span>       <span class="p">(</span><span class="n">one</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">term3</span> <span class="o">=</span> <span class="s2">&quot;21&quot;</span>       <span class="p">(</span><span class="n">two</span> <span class="mi">1</span><span class="n">s</span><span class="p">)</span>
+<span class="n">term4</span> <span class="o">=</span> <span class="s2">&quot;1211&quot;</span>     <span class="p">(</span><span class="n">one</span> <span class="mi">2</span><span class="p">,</span> <span class="n">one</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">countAndSay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type n: int</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="n">prev</span> <span class="o">=</span> <span class="n">res</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">prev</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">prev</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">prev</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">res</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">+</span> <span class="n">prev</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                    <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">+</span> <span class="n">prev</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O(2ⁿ)</p></li>
+<li><p><strong>Space Complexity:</strong> O(2ⁿ)</p>
+</details></li>
+</ul>
+</section>
+</section>
+<section id="medium">
+<h2>Medium<a class="headerlink" href="#medium" title="Permalink to this heading">#</a></h2>
+<section id="group-anagrams-49">
+<h3>Group Anagrams - <a class="reference external" href="https://leetcode.com/problems/group-anagrams/">#49</a><a class="headerlink" href="#group-anagrams-49" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">strs</span></code>: List of lowercase strings (e.g., <code class="docutils literal notranslate"><span class="pre">[&quot;eat&quot;,</span> <span class="pre">&quot;tea&quot;,</span> <span class="pre">&quot;tan&quot;,</span> <span class="pre">&quot;ate&quot;,</span> <span class="pre">&quot;nat&quot;,</span> <span class="pre">&quot;bat&quot;]</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>List of grouped anagrams</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">strs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eat&quot;</span><span class="p">,</span> <span class="s2">&quot;tea&quot;</span><span class="p">,</span> <span class="s2">&quot;tan&quot;</span><span class="p">,</span> <span class="s2">&quot;ate&quot;</span><span class="p">,</span> <span class="s2">&quot;nat&quot;</span><span class="p">,</span> <span class="s2">&quot;bat&quot;</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;eat&quot;</span><span class="p">,</span><span class="s2">&quot;tea&quot;</span><span class="p">,</span><span class="s2">&quot;ate&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;tan&quot;</span><span class="p">,</span><span class="s2">&quot;nat&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;bat&quot;</span><span class="p">]]</span>
+
+<span class="n">Explanation</span><span class="p">:</span> <span class="n">Group</span> <span class="n">strings</span> <span class="n">that</span> <span class="n">are</span> <span class="n">anagrams</span> <span class="n">of</span> <span class="n">each</span> <span class="n">other</span><span class="o">.</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">groupAnagrams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type strs: List[str]</span>
+<span class="sd">        :rtype: List[List[str]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strs</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O(N × K log K)</p></li>
+<li><p><strong>Space Complexity:</strong> O(NK)</p>
+</details></li>
+</ul>
+</section>
+<section id="longest-substring-without-repeating-characters-3">
+<h3>Longest Substring Without Repeating Characters - <a class="reference external" href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">#3</a><a class="headerlink" href="#longest-substring-without-repeating-characters-3" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: A string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;abcabcbb&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Integer length of longest substring without repeating characters</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;abcabcbb&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">3</span>
+
+<span class="n">Explanation</span><span class="p">:</span> <span class="n">The</span> <span class="n">answer</span> <span class="ow">is</span> <span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="k">with</span> <span class="n">length</span> <span class="mf">3.</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lengthOfLongestSubstring</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type s: str</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">right</span><span class="p">,</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">seen</span> <span class="ow">and</span> <span class="n">seen</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">left</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">seen</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">seen</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="n">right</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">right</span> <span class="o">-</span> <span class="n">left</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O(n)</p></li>
+<li><p><strong>Space Complexity:</strong> O(min(n, m))</p>
+</details></li>
+</ul>
+</section>
+<section id="longest-palindromic-substring-5">
+<h3>Longest Palindromic Substring - <a class="reference external" href="https://leetcode.com/problems/longest-palindromic-substring/">#5</a><a class="headerlink" href="#longest-palindromic-substring-5" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: A string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;babad&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>The longest palindrome substring</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;babad&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;bab&quot;</span>
+
+<span class="n">Explanation</span><span class="p">:</span> <span class="s2">&quot;aba&quot;</span> <span class="ow">is</span> <span class="n">also</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">answer</span><span class="o">.</span>
+</pre></div>
+</div>
+  <details>
+    <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">longestPalindrome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type s: str</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">s</span>
+
+        <span class="n">dp</span><span class="o">=</span> <span class="p">[[</span><span class="kc">False</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))]</span>
+
+        <span class="n">max_len</span><span class="o">=</span><span class="mi">1</span>
+        <span class="n">start</span><span class="o">=</span><span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="ow">and</span> <span class="p">((</span><span class="n">i</span><span class="o">-</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">&lt;=</span><span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])):</span>
+                    <span class="n">dp</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="kc">True</span>
+
+                    <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">):</span>
+                        <span class="n">max_len</span><span class="o">=</span><span class="n">i</span><span class="o">-</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span>
+                        <span class="n">start</span><span class="o">=</span><span class="n">j</span>
+        <span class="k">return</span> <span class="n">s</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">start</span><span class="o">+</span><span class="n">max_len</span><span class="p">]</span>
+</pre></div>
+</div>
+  </details>
+  <details>
+    <summary><strong>Complexity Analysis</strong></summary>
+<ul>
+<li><p><strong>Time Complexity:</strong> O(n²)</p></li>
+<li><p><strong>Space Complexity:</strong> O(n²)</p>
+</details></li>
+</ul>
+</section>
+<section id="permutation-in-string-567">
+<h3>Permutation in String - <a class="reference external" href="https://leetcode.com/problems/permutation-in-string/">#567</a><a class="headerlink" href="#permutation-in-string-567" title="Permalink to this heading">#</a></h3>
+<p><strong>Problem</strong></p>
+<p>Given strings <code class="docutils literal notranslate"><span class="pre">s1</span></code> and <code class="docutils literal notranslate"><span class="pre">s2</span></code>, return <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">s2</span></code> contains a permutation of <code class="docutils literal notranslate"><span class="pre">s1</span></code>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="input">
+<h2>🔢 Input<a class="headerlink" href="#input" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s1</span></code>: string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s2</span></code>: string</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="output">
+<h2>📤 Output<a class="headerlink" href="#output" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Boolean value</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="example">
+<h2>✅ Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="s2">&quot;ab&quot;</span><span class="p">,</span> <span class="n">s2</span> <span class="o">=</span> <span class="s2">&quot;eidbaooo&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">checkInclusion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+        <span class="n">need</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s2</span><span class="p">):</span>
+            <span class="n">window</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+            <span class="k">while</span> <span class="n">window</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">need</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span>
+                <span class="n">window</span><span class="p">[</span><span class="n">s2</span><span class="p">[</span><span class="n">l</span><span class="p">]]</span> <span class="o">-=</span><span class="mi">1</span>
+                <span class="n">l</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">-</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># Optmized</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">checkInclusion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type s1: str</span>
+<span class="sd">        :type s2: str</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">l1</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+        <span class="n">l2</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">l1</span><span class="o">&gt;</span><span class="n">l2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">count_1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">26</span>
+        <span class="n">count_2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">26</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l1</span><span class="p">):</span>
+            <span class="n">count_1</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="mi">97</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="n">count_2</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="mi">97</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="n">count_1</span> <span class="o">==</span> <span class="n">count_2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span><span class="n">l2</span><span class="p">):</span>
+            <span class="n">count_2</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="mi">97</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="n">count_2</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">l1</span><span class="p">])</span><span class="o">-</span><span class="mi">97</span><span class="p">]</span><span class="o">-=</span><span class="mi">1</span>
+            <span class="k">if</span> <span class="n">count_1</span> <span class="o">==</span> <span class="n">count_2</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">count_1</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">count_2</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="kc">True</span>
+        
+        <span class="k">return</span> <span class="kc">False</span>
+        
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(n)</p></li>
+<li><p><strong>Space Complexity:</strong> O(1) charset</p></li>
+</ul>
+</details>
+</details><section id="remove-all-adjacent-duplicates-in-string-ii-1209">
+<h3>Remove All Adjacent Duplicates in String II - <a class="reference external" href="https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/">#1209</a><a class="headerlink" href="#remove-all-adjacent-duplicates-in-string-ii-1209" title="Permalink to this heading">#</a></h3>
+<p><strong>🧾 Problem</strong></p>
+<p>Given string <code class="docutils literal notranslate"><span class="pre">s</span></code> and integer <code class="docutils literal notranslate"><span class="pre">k</span></code>, repeatedly remove adjacent duplicate characters of length <code class="docutils literal notranslate"><span class="pre">k</span></code> until no more.</p>
+<hr class="docutils" />
+<p><strong>🔢 Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">k</span></code>: int</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>📤 Output</strong></p>
+<ul class="simple">
+<li><p>The final string after all removals.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>✅ Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;deeedbbcccbdaa&quot;</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;aa&quot;</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">removeDuplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type s: str</span>
+<span class="sd">        :type k: int</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Each element is [char, count]</span>
+
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">stack</span> <span class="ow">and</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">char</span><span class="p">:</span>
+                <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># increment count</span>
+                <span class="k">if</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">k</span><span class="p">:</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>  <span class="c1"># remove the group</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">char</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># new char, count = 1</span>
+
+        <span class="c1"># Reconstruct string from stack</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">char</span> <span class="o">*</span> <span class="n">count</span> <span class="k">for</span> <span class="n">char</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">stack</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(n)</p></li>
+<li><p><strong>Space Complexity:</strong> O(n)</p></li>
+</ul>
+</details></section>
+<section id="multiply-strings-43">
+<h3>Multiply Strings - <a class="reference external" href="https://leetcode.com/problems/multiply-strings/">#43</a><a class="headerlink" href="#multiply-strings-43" title="Permalink to this heading">#</a></h3>
+<p><strong>🧾 Problem</strong></p>
+<p>Given two non-negative integers <code class="docutils literal notranslate"><span class="pre">num1</span></code> and <code class="docutils literal notranslate"><span class="pre">num2</span></code> as strings, return the product also as a string.</p>
+<hr class="docutils" />
+<p><strong>🔢 Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">num1</span></code>: string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num2</span></code>: string</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>📤 Output</strong></p>
+<ul class="simple">
+<li><p>Product as string.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>✅ Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">num1</span> <span class="o">=</span> <span class="s2">&quot;123&quot;</span><span class="p">,</span> <span class="n">num2</span> <span class="o">=</span> <span class="s2">&quot;456&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;56088&quot;</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">):</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">num1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">num2</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">m</span><span class="o">+</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
+                <span class="n">mul</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num1</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">num2</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                <span class="n">sum_</span> <span class="o">=</span> <span class="n">mul</span> <span class="o">+</span> <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sum_</span> <span class="o">%</span><span class="mi">10</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sum_</span><span class="o">//</span><span class="mi">10</span>
+        <span class="c1"># skip leading zeros</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">idx</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">res</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">idx</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">res</span><span class="p">[</span><span class="n">idx</span><span class="p">:]))</span>
+
+<span class="c1"># simplified</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type num1: str</span>
+<span class="sd">        :type num2: str</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">num1</span><span class="p">)</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">num2</span><span class="p">))</span>
+        
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(mn)</p></li>
+<li><p><strong>Space Complexity:</strong> O(m+n)</p></li>
+</ul>
+</details></section>
+<section id="word-pattern-290">
+<h3>Word Pattern - <a class="reference external" href="https://leetcode.com/problems/word-pattern/">#290</a><a class="headerlink" href="#word-pattern-290" title="Permalink to this heading">#</a></h3>
+<p><strong>🧾 Problem</strong></p>
+<p>Given a <code class="docutils literal notranslate"><span class="pre">pattern</span></code> and a string <code class="docutils literal notranslate"><span class="pre">s</span></code>, return <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">s</span></code> follows the same pattern.</p>
+<hr class="docutils" />
+<p><strong>🔢 Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pattern</span></code>: string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: string of words</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>📤 Output</strong></p>
+<ul class="simple">
+<li><p>Boolean value</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>✅ Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s2">&quot;abba&quot;</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;dog cat cat dog&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wordPattern</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type pattern: str</span>
+<span class="sd">        :type s: str</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">mp</span><span class="p">,</span> <span class="n">used</span> <span class="o">=</span> <span class="p">{},</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">mp</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">mp</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">!=</span> <span class="n">w</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">used</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="n">mp</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
+                <span class="n">used</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(n)</p></li>
+<li><p><strong>Space Complexity:</strong> O(n)</p></li>
+</ul>
+</details></section>
+<section id="is-subsequence-392">
+<h3>Is Subsequence - <a class="reference external" href="https://leetcode.com/problems/is-subsequence/">#392</a><a class="headerlink" href="#is-subsequence-392" title="Permalink to this heading">#</a></h3>
+<p><strong>🧾 Problem</strong></p>
+<p>Given strings <code class="docutils literal notranslate"><span class="pre">s</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code>, return <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">s</span></code> is a subsequence of <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p>
+<hr class="docutils" />
+<p><strong>🔢 Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: string</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>📤 Output</strong></p>
+<ul class="simple">
+<li><p>Boolean value</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>✅ Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="s2">&quot;ahbgdc&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isSubsequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="n">i</span> <span class="o">+=</span><span class="mi">1</span>
+            <span class="n">j</span> <span class="o">+=</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(n + m)</p></li>
+<li><p><strong>Space Complexity:</strong> O(1)</p></li>
+</ul>
+</details></section>
+<section id="reverse-words-in-a-string-151">
+<h3>Reverse Words in a String - <a class="reference external" href="https://leetcode.com/problems/reverse-words-in-a-string/">#151</a><a class="headerlink" href="#reverse-words-in-a-string-151" title="Permalink to this heading">#</a></h3>
+<p><strong>🧾 Problem</strong></p>
+<p>Given an input string <code class="docutils literal notranslate"><span class="pre">s</span></code>, reverse the order of words.</p>
+<hr class="docutils" />
+<p><strong>🔢 Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: A string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;the</span> <span class="pre">sky</span> <span class="pre">is</span> <span class="pre">blue&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>📤 Output</strong></p>
+<ul class="simple">
+<li><p>Reversed string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;blue</span> <span class="pre">is</span> <span class="pre">sky</span> <span class="pre">the&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>✅ Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;the sky is blue&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;blue is sky the&quot;</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reverseWords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type s: str</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(n)</p></li>
+<li><p><strong>Space Complexity:</strong> O(n)</p></li>
+</ul>
+</details></section>
+<section id="custom-sort-string-791">
+<h3>Custom Sort String - <a class="reference external" href="https://leetcode.com/problems/custom-sort-string/">#791</a><a class="headerlink" href="#custom-sort-string-791" title="Permalink to this heading">#</a></h3>
+<p><strong>Problem</strong></p>
+<p>Given order string <code class="docutils literal notranslate"><span class="pre">order</span></code> (a permutation of lowercase letters) and string <code class="docutils literal notranslate"><span class="pre">s</span></code>, sort the characters in <code class="docutils literal notranslate"><span class="pre">s</span></code> so that they match the order defined by <code class="docutils literal notranslate"><span class="pre">order</span></code>. Characters not in <code class="docutils literal notranslate"><span class="pre">order</span></code> go at the end.</p>
+<hr class="docutils" />
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">order</span></code>: string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: string</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>📤 Output</strong></p>
+<ul class="simple">
+<li><p>Sorted version of <code class="docutils literal notranslate"><span class="pre">s</span></code></p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">order</span> <span class="o">=</span> <span class="s2">&quot;cba&quot;</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;abcd&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;cbad&quot;</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">customSortString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :type order: str</span>
+<span class="sd">        :type s: str</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">count</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ch</span> <span class="o">*</span> <span class="n">count</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">ch</span><span class="p">,</span> <span class="n">cnt</span> <span class="ow">in</span> <span class="n">count</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ch</span> <span class="o">*</span> <span class="n">cnt</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(n + m) where n = len(order), m = len(s)</p></li>
+<li><p><strong>Space Complexity:</strong> O(m)</p></li>
+</ul>
+</details></section>
+</section>
+<section id="hard">
+<h2>Hard<a class="headerlink" href="#hard" title="Permalink to this heading">#</a></h2>
+<section id="wildcard-matching-44">
+<h3>Wildcard Matching - <a class="reference external" href="https://leetcode.com/problems/wildcard-matching/">#44</a><a class="headerlink" href="#wildcard-matching-44" title="Permalink to this heading">#</a></h3>
+<p><strong>🧾 Problem</strong></p>
+<p>Given strings <code class="docutils literal notranslate"><span class="pre">s</span></code> and pattern <code class="docutils literal notranslate"><span class="pre">p</span></code> where <code class="docutils literal notranslate"><span class="pre">p</span></code> includes ‘?’ and ‘*’ wildcard characters, implement wildcard matching.</p>
+<ul class="simple">
+<li><p>‘?’ matches any single character.</p></li>
+<li><p>‘*’ matches any sequence of characters (including empty).</p></li>
+</ul>
+<p>Return <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">s</span></code> matches the pattern.</p>
+<hr class="docutils" />
+<p><strong>🔢 Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: Target string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: Pattern string with wildcards</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>📤 Output</strong></p>
+<ul class="simple">
+<li><p>Boolean value whether <code class="docutils literal notranslate"><span class="pre">s</span></code> matches <code class="docutils literal notranslate"><span class="pre">p</span></code></p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>✅ Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;adceb&quot;</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="s2">&quot;*a*b&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+
+<span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;acdcb&quot;</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="s2">&quot;a*c?b&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code (DP)</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isMatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">False</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+                <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="n">p</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;?&#39;</span><span class="p">:</span>
+                    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">p</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+                    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(mn)</p></li>
+<li><p><strong>Space Complexity:</strong> O(mn) (can optimize to O(n))</p></li>
+</ul>
+</details></section>
+<section id="regular-expression-matching-10">
+<h3>Regular Expression Matching - <a class="reference external" href="https://leetcode.com/problems/regular-expression-matching/">#10</a><a class="headerlink" href="#regular-expression-matching-10" title="Permalink to this heading">#</a></h3>
+<p><strong>🧾 Problem</strong></p>
+<p>Implement regex matching with support for ‘.’ and ‘*’:</p>
+<ul class="simple">
+<li><p>‘.’ matches any single character.</p></li>
+<li><p>‘*’ matches zero or more of the preceding element.</p></li>
+</ul>
+<p>Return <code class="docutils literal notranslate"><span class="pre">true</span></code> if <code class="docutils literal notranslate"><span class="pre">text</span></code> matches <code class="docutils literal notranslate"><span class="pre">pattern</span></code>.</p>
+<hr class="docutils" />
+<p><strong>🔢 Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">text</span></code>: Target string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pattern</span></code>: Regex pattern</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>📤 Output</strong></p>
+<ul class="simple">
+<li><p>Boolean value</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>✅ Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;aab&quot;</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s2">&quot;c*a*b&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+
+<span class="n">Input</span><span class="p">:</span> <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;mississippi&quot;</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s2">&quot;mis*is*p*.&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code (DP)</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># Top Down aproach / Memoization</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isMatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="c1"># Create a memoization dictionary to store results of subproblems</span>
+        <span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Define a helper function for recursion with indices i (for s) and j (for p)</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">dp</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+            <span class="c1"># If result is already computed, return from memo</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span>
+            <span class="c1"># If we&#39;ve reached the end of the pattern</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+                <span class="c1"># Return True if s is also fully matched</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Check if the current character matches (if s is not exhausted)</span>
+                <span class="n">first_match</span> <span class="o">=</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">or</span> <span class="n">p</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+                <span class="c1"># If next character in p is &#39;*&#39;, we have two choices:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="ow">and</span> <span class="n">p</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+                    <span class="c1"># 1. Don&#39;t use the star (move p by 2)</span>
+                    <span class="c1">#2. Use the star if first_match (move s by 1, keep p)</span>
+                    <span class="n">ans</span> <span class="o">=</span> <span class="n">dp</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">first_match</span> <span class="ow">and</span> <span class="n">dp</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># If not &#39;*&#39;, proceed only if first_match, move both by 1</span>
+                    <span class="n">ans</span> <span class="o">=</span> <span class="n">first_match</span> <span class="ow">and</span> <span class="n">dp</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># Store result in memo and return</span>
+            <span class="n">memo</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="n">ans</span>
+            <span class="k">return</span> <span class="n">ans</span>
+        <span class="c1"># Start recursion from the beginning of s and p</span>
+        <span class="k">return</span> <span class="n">dp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(mn)</p></li>
+<li><p><strong>Space Complexity:</strong> O(mn)</p></li>
+</ul>
+</details></section>
+<section id="minimum-window-substring-76">
+<h3>Minimum Window Substring - <a class="reference external" href="https://leetcode.com/problems/minimum-window-substring/">#76</a><a class="headerlink" href="#minimum-window-substring-76" title="Permalink to this heading">#</a></h3>
+<p><strong>🧾 Problem</strong></p>
+<p>Given strings <code class="docutils literal notranslate"><span class="pre">s</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code>, return the minimum window in <code class="docutils literal notranslate"><span class="pre">s</span></code> which contains all characters of <code class="docutils literal notranslate"><span class="pre">t</span></code>. Return empty string if no such window.</p>
+<hr class="docutils" />
+<p><strong>🔢 Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: Target string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: Pattern string</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>📤 Output</strong></p>
+<ul class="simple">
+<li><p>Smallest substring of <code class="docutils literal notranslate"><span class="pre">s</span></code> containing all chars of <code class="docutils literal notranslate"><span class="pre">t</span></code></p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>✅ Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;ADOBECODEBANC&quot;</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="s2">&quot;ABC&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;BANC&quot;</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code (Sliding Window)</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">minWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+        <span class="n">need</span><span class="p">,</span> <span class="n">window</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="p">{}</span>
+        <span class="n">have</span><span class="p">,</span> <span class="n">needCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">need</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+            <span class="n">window</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">need</span> <span class="ow">and</span> <span class="n">window</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="n">need</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
+                <span class="n">have</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="n">have</span> <span class="o">==</span> <span class="n">needCount</span><span class="p">:</span>
+                <span class="n">substring</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">:</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">res</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">substring</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
+                    <span class="n">res</span> <span class="o">=</span> <span class="n">substring</span>
+                <span class="n">window</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]]</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="ow">in</span> <span class="n">need</span> <span class="ow">and</span> <span class="n">window</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="n">need</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]]:</span>
+                    <span class="n">have</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(n + m)</p></li>
+<li><p><strong>Space Complexity:</strong> O(n + |Σ|)</p></li>
+</ul>
+</details></section>
+<section id="palindrome-pairs-336">
+<h3>Palindrome Pairs - <a class="reference external" href="https://leetcode.com/problems/palindrome-pairs/">#336</a><a class="headerlink" href="#palindrome-pairs-336" title="Permalink to this heading">#</a></h3>
+<p><strong>🧾 Problem</strong></p>
+<p>Given a list of unique words, return all pairs <code class="docutils literal notranslate"><span class="pre">[i,</span> <span class="pre">j]</span></code> such that <code class="docutils literal notranslate"><span class="pre">words[i]</span> <span class="pre">+</span> <span class="pre">words[j]</span></code> forms a palindrome.</p>
+<hr class="docutils" />
+<p><strong>🔢 Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">words</span></code>: List of unique strings</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>📤 Output</strong></p>
+<ul class="simple">
+<li><p>List of index pairs <code class="docutils literal notranslate"><span class="pre">[i,</span> <span class="pre">j]</span></code></p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>✅ Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;bat&quot;</span><span class="p">,</span><span class="s2">&quot;tab&quot;</span><span class="p">,</span><span class="s2">&quot;cat&quot;</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code (Trie + Palindrome Checks)</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">palindromePairs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">is_pal</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">s</span> <span class="o">==</span> <span class="n">s</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">trie</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">trie</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">w</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">is_pal</span><span class="p">(</span><span class="n">w</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">-</span><span class="n">j</span><span class="p">]):</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;pal&#39;</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">node</span><span class="p">[</span><span class="s1">&#39;idx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">trie</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s1">&#39;idx&#39;</span> <span class="ow">in</span> <span class="n">node</span> <span class="ow">and</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;idx&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">i</span> <span class="ow">and</span> <span class="n">is_pal</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">:]):</span>
+                    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">node</span><span class="p">[</span><span class="s1">&#39;idx&#39;</span><span class="p">]])</span>
+                <span class="k">if</span> <span class="n">ch</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pal&#39;</span><span class="p">,</span> <span class="p">[]):</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+                        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(k²*N + Σk) where k = avg length</p></li>
+<li><p><strong>Space Complexity:</strong> O(Nk)</p></li>
+</ul>
+</details></section>
+<section id="word-ladder-ii-126">
+<h3>Word Ladder II - <a class="reference external" href="https://leetcode.com/problems/word-ladder-ii/">#126</a><a class="headerlink" href="#word-ladder-ii-126" title="Permalink to this heading">#</a></h3>
+<p><strong>🧾 Problem</strong></p>
+<p>Given <code class="docutils literal notranslate"><span class="pre">beginWord</span></code>, <code class="docutils literal notranslate"><span class="pre">endWord</span></code>, and <code class="docutils literal notranslate"><span class="pre">wordList</span></code>, return all shortest transformation sequences from <code class="docutils literal notranslate"><span class="pre">beginWord</span></code> to <code class="docutils literal notranslate"><span class="pre">endWord</span></code>, where each step changes one letter and the word must be in the wordList.</p>
+<hr class="docutils" />
+<p><strong>🔢 Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">beginWord</span></code>, <code class="docutils literal notranslate"><span class="pre">endWord</span></code>: strings</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wordList</span></code>: list of strings</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>📤 Output</strong></p>
+<ul class="simple">
+<li><p>List of lists, each representing a shortest transformation chain</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>✅ Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">beginWord</span> <span class="o">=</span> <span class="s2">&quot;hit&quot;</span><span class="p">,</span> <span class="n">endWord</span> <span class="o">=</span> <span class="s2">&quot;cog&quot;</span><span class="p">,</span> <span class="n">wordList</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;hot&quot;</span><span class="p">,</span><span class="s2">&quot;dot&quot;</span><span class="p">,</span><span class="s2">&quot;dog&quot;</span><span class="p">,</span><span class="s2">&quot;lot&quot;</span><span class="p">,</span><span class="s2">&quot;log&quot;</span><span class="p">,</span><span class="s2">&quot;cog&quot;</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span>
+  <span class="p">[</span><span class="s2">&quot;hit&quot;</span><span class="p">,</span><span class="s2">&quot;hot&quot;</span><span class="p">,</span><span class="s2">&quot;dot&quot;</span><span class="p">,</span><span class="s2">&quot;dog&quot;</span><span class="p">,</span><span class="s2">&quot;cog&quot;</span><span class="p">],</span>
+  <span class="p">[</span><span class="s2">&quot;hit&quot;</span><span class="p">,</span><span class="s2">&quot;hot&quot;</span><span class="p">,</span><span class="s2">&quot;lot&quot;</span><span class="p">,</span><span class="s2">&quot;log&quot;</span><span class="p">,</span><span class="s2">&quot;cog&quot;</span><span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code (BFS + DFS)</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">findLadders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beginWord</span><span class="p">,</span> <span class="n">endWord</span><span class="p">,</span> <span class="n">wordList</span><span class="p">):</span>
+        <span class="n">prefix_d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">wordList</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)):</span>
+                <span class="n">prefix_d</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;*&quot;</span><span class="o">+</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+        
+        <span class="n">order</span> <span class="o">=</span> <span class="p">{</span><span class="n">beginWord</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="n">beginWord</span><span class="p">])</span>
+        <span class="n">temp_q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+        <span class="n">go_on</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">end_list</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">while</span> <span class="n">queue</span> <span class="ow">and</span> <span class="n">go_on</span><span class="p">:</span>  <span class="c1"># There is no node even added to temp_q</span>
+            <span class="n">temp_d</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>        <span class="c1"># Pop every node on this level</span>
+                <span class="n">cur</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">cur</span><span class="p">)):</span>
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">prefix_d</span><span class="p">[</span><span class="n">cur</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;*&quot;</span><span class="o">+</span><span class="n">cur</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]]:</span>
+                        <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">endWord</span><span class="p">:</span>
+                            <span class="n">end_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                            <span class="n">go_on</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="k">if</span> <span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">temp_d</span><span class="p">:</span>
+                                <span class="n">temp_d</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">cur</span><span class="p">]</span>
+                                <span class="n">temp_q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">temp_d</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+            <span class="n">queue</span> <span class="o">=</span> <span class="n">temp_q</span>
+            <span class="n">temp_q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+            <span class="n">order</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">temp_d</span><span class="p">)</span>
+        
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1"># DFS to restore the paths</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="p">[</span><span class="n">node</span><span class="p">]</span>    <span class="c1"># add the node(Deepcopy)</span>
+            <span class="k">if</span> <span class="n">order</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">==</span> <span class="p">[]:</span>
+                <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">path</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="k">return</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">order</span><span class="p">[</span><span class="n">node</span><span class="p">]:</span>
+                <span class="n">dfs</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">endWord</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
+            <span class="n">dfs</span><span class="p">([],</span> <span class="n">endWord</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        
+        <span class="k">return</span> <span class="n">ret</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> Roughly O(N * 26^L)</p></li>
+<li><p><strong>Space Complexity:</strong> Proportional to number of paths</p></li>
+</ul>
+</details></section>
+<section id="basic-calculator-224">
+<h3>Basic Calculator - <a class="reference external" href="https://leetcode.com/problems/basic-calculator/">#224</a><a class="headerlink" href="#basic-calculator-224" title="Permalink to this heading">#</a></h3>
+<p><strong>Problem</strong></p>
+<p>Implement a basic calculator to evaluate a string expression containing <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">(</span></code>, <code class="docutils literal notranslate"><span class="pre">)</span></code>, and digits. No multiplication/division.</p>
+<hr class="docutils" />
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: Arithmetic expression (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;(1+(4+5+2)-3)+(6+8)&quot;</span></code>)</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Integer result</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;(1+(4+5+2)-3)+(6+8)&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">23</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code (Stack)</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="n">res</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">sign</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="n">num</span><span class="o">*</span><span class="mi">10</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">c</span> <span class="ow">in</span> <span class="s1">&#39;+-&#39;</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="n">sign</span><span class="o">*</span><span class="n">num</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">sign</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">c</span><span class="o">==</span><span class="s1">&#39;+&#39;</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sign</span><span class="p">)</span>
+                <span class="n">res</span><span class="p">,</span> <span class="n">sign</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;)&#39;</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="n">sign</span><span class="o">*</span><span class="n">num</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">res</span> <span class="o">*=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">sign</span><span class="o">*</span><span class="n">num</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(n)</p></li>
+<li><p><strong>Space Complexity:</strong> O(n)</p></li>
+</ul>
+</details></section>
+<section id="remove-invalid-parentheses-301">
+<h3>Remove Invalid Parentheses - <a class="reference external" href="https://leetcode.com/problems/remove-invalid-parentheses/">#301</a><a class="headerlink" href="#remove-invalid-parentheses-301" title="Permalink to this heading">#</a></h3>
+<p><strong>Problem</strong></p>
+<p>Remove the minimum number of invalid parentheses to make the input string valid. Return all possible valid expressions.</p>
+<hr class="docutils" />
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: String containing parentheses and letters</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>List of all valid strings after removals</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;()())()&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;()()()&quot;</span><span class="p">,</span> <span class="s2">&quot;(())()&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code (BFS)</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">removeInvalidParentheses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">is_valid</span><span class="p">(</span><span class="n">st</span><span class="p">):</span>
+            <span class="n">bal</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">st</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c</span><span class="o">==</span><span class="s1">&#39;(&#39;</span><span class="p">:</span>
+                    <span class="n">bal</span><span class="o">+=</span><span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">c</span><span class="o">==</span><span class="s1">&#39;)&#39;</span><span class="p">:</span>
+                    <span class="n">bal</span><span class="o">-=</span><span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">bal</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="n">bal</span><span class="o">==</span><span class="mi">0</span>
+        
+        <span class="n">level</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">}</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">valid</span> <span class="o">=</span> <span class="p">[</span><span class="n">st</span> <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">level</span> <span class="k">if</span> <span class="n">is_valid</span><span class="p">(</span><span class="n">st</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="n">valid</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">valid</span>
+            <span class="n">next_level</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">level</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">st</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="n">st</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;()&#39;</span><span class="p">:</span>
+                        <span class="n">next_level</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">st</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">st</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="n">level</span> <span class="o">=</span> <span class="n">next_level</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> Exponential in worst case</p></li>
+<li><p><strong>Space Complexity:</strong> Exponential</p></li>
+</ul>
+</details></section>
+<section id="scramble-string-87">
+<h3>Scramble String - <a class="reference external" href="https://leetcode.com/problems/scramble-string/">#87</a><a class="headerlink" href="#scramble-string-87" title="Permalink to this heading">#</a></h3>
+<p><strong>Problem</strong></p>
+<p>Given a string <code class="docutils literal notranslate"><span class="pre">s1</span></code>, determine if <code class="docutils literal notranslate"><span class="pre">s2</span></code> is a scramble of <code class="docutils literal notranslate"><span class="pre">s1</span></code>. Scrambling involves recursively partitioning and swapping.</p>
+<hr class="docutils" />
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s1</span></code>, <code class="docutils literal notranslate"><span class="pre">s2</span></code>: Strings of equal length</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Boolean value</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="s2">&quot;great&quot;</span><span class="p">,</span> <span class="n">s2</span> <span class="o">=</span> <span class="s2">&quot;rgeat&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code (Recursive + Memo)</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isScramble</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="k">if</span> <span class="n">s1</span><span class="o">==</span><span class="n">s2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">)</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span><span class="o">!=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">s2</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">isScramble</span><span class="p">(</span><span class="n">s1</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">s2</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">memo</span><span class="p">)</span> <span class="ow">and</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">isScramble</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">:],</span> <span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">:],</span> <span class="n">memo</span><span class="p">))</span> <span class="ow">or</span> \
+               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">isScramble</span><span class="p">(</span><span class="n">s1</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">s2</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="p">:],</span> <span class="n">memo</span><span class="p">)</span> <span class="ow">and</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">isScramble</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">:],</span> <span class="n">s2</span><span class="p">[:</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="p">],</span> <span class="n">memo</span><span class="p">)):</span>
+                <span class="n">memo</span><span class="p">[(</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">memo</span><span class="p">[(</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> Very high (exponential with memo helps)</p></li>
+<li><p><strong>Space Complexity:</strong> O(n⁴) in worst case</p></li>
+</ul>
+</details></section>
+<section id="distinct-subsequences-115">
+<h3>Distinct Subsequences - <a class="reference external" href="https://leetcode.com/problems/distinct-subsequences/">#115</a><a class="headerlink" href="#distinct-subsequences-115" title="Permalink to this heading">#</a></h3>
+<p><strong>Problem</strong></p>
+<p>Given strings <code class="docutils literal notranslate"><span class="pre">s</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code>, count the number of distinct subsequences of <code class="docutils literal notranslate"><span class="pre">s</span></code> which equal <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p>
+<hr class="docutils" />
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>: Strings</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Integer count of subsequences</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;rabbbit&quot;</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="s2">&quot;rabbit&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code (DP)</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">numDistinct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(mn)</p></li>
+<li><p><strong>Space Complexity:</strong> O(mn)</p></li>
+</ul>
+</details></section>
+<section id="data-stream-as-disjoint-intervals-352">
+<h3>Data Stream as Disjoint Intervals - <a class="reference external" href="https://leetcode.com/problems/data-stream-as-disjoint-intervals/">#352</a><a class="headerlink" href="#data-stream-as-disjoint-intervals-352" title="Permalink to this heading">#</a></h3>
+<p><strong>Problem</strong></p>
+<p>Maintain a data structure that supports:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">addNum(val)</span></code>: add value from data stream,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getIntervals()</span></code>: return disjoint intervals of added values.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p>Sequence of <code class="docutils literal notranslate"><span class="pre">addNum</span></code> calls, then <code class="docutils literal notranslate"><span class="pre">getIntervals</span></code></p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>List of disjoint intervals</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">addNum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">addNum</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">addNum</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">getIntervals</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">]]</span>
+<span class="n">addNum</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">getIntervals</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">]]</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<details>
+  <summary><strong>🧠 Solution Code (SortedList)</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">bisect</span><span class="w"> </span><span class="kn">import</span> <span class="n">bisect_left</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SummaryRanges</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">addNum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">bisect_left</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">,</span> <span class="p">[</span><span class="n">val</span><span class="p">,</span> <span class="n">val</span><span class="p">])</span>
+        <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">val</span><span class="p">,</span> <span class="n">val</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="p">[</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getIntervals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>🧮 Complexity Analysis</strong></summary>
+<ul class="simple">
+<li><p><strong>Time Complexity:</strong> O(n) per insertion in worst case</p></li>
+<li><p><strong>Space Complexity:</strong> O(n)</p></li>
+</ul>
+</details></section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "conda-base-py"
+        },
+        kernelOptions: {
+            name: "conda-base-py",
+            path: "./problems"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'conda-base-py'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_part.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Arrays/List</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03_part.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Linked Lists</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#easy">Easy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#valid-anagram-242">Valid Anagram - #242</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implement-strstr-28">Implement strStr() - #28</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reverse-string-344">Reverse String - #344</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reverse-words-in-a-string-iii-557">Reverse Words in a String III - #557</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detect-capital-520">Detect Capital - #520</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goat-latin-824">Goat Latin - #824</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#to-lower-case-709">To Lower Case - #709</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#valid-palindrome-125">Valid Palindrome - #125</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#long-pressed-name-925">Long Pressed Name - #925</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#count-and-say-38">Count and Say - #38</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#medium">Medium</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-anagrams-49">Group Anagrams - #49</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#longest-substring-without-repeating-characters-3">Longest Substring Without Repeating Characters - #3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#longest-palindromic-substring-5">Longest Palindromic Substring - #5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#permutation-in-string-567">Permutation in String - #567</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#input">🔢 Input</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output">📤 Output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">✅ Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-all-adjacent-duplicates-in-string-ii-1209">Remove All Adjacent Duplicates in String II - #1209</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiply-strings-43">Multiply Strings - #43</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#word-pattern-290">Word Pattern - #290</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-subsequence-392">Is Subsequence - #392</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reverse-words-in-a-string-151">Reverse Words in a String - #151</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-sort-string-791">Custom Sort String - #791</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hard">Hard</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wildcard-matching-44">Wildcard Matching - #44</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-expression-matching-10">Regular Expression Matching - #10</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-window-substring-76">Minimum Window Substring - #76</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#palindrome-pairs-336">Palindrome Pairs - #336</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#word-ladder-ii-126">Word Ladder II - #126</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-calculator-224">Basic Calculator - #224</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove-invalid-parentheses-301">Remove Invalid Parentheses - #301</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scramble-string-87">Scramble String - #87</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distinct-subsequences-115">Distinct Subsequences - #115</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-stream-as-disjoint-intervals-352">Data Stream as Disjoint Intervals - #352</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By svgoudar
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
