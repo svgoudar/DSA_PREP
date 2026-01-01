@@ -1,0 +1,1868 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Two Pointers &#8212; Machine Learning Handbook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'problems/13_part';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Prefix Sum / Pointer" href="14_part.html" />
+    <link rel="prev" title="Sliding Window" href="12_part.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="overview.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Machine Learning Handbook - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Machine Learning Handbook - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="overview.html">
+                    Data Structure & Algorithm
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_part.html">Arrays/List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_part.html">Strings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_part.html">Linked Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_part.html">Stacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_part.html">Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_part.html">Tree/Graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_part.html">Hashing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_part.html">Sorting Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_part.html">Searching Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_part.html">Divide &amp; Conquer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_part.html">Greedy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_part.html">Sliding Window</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Two Pointers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_part.html">Prefix Sum / Pointer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_part.html">Dynamic Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_part.html">Backtracking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_part.html">Bit Manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_part.html">Brute Force</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/svgoudar/DSA_PREP/blob/master/problems/13_part.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/svgoudar/DSA_PREP" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/svgoudar/DSA_PREP/issues/new?title=Issue%20on%20page%20%2Fproblems/13_part.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/problems/13_part.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Two Pointers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#easy">Easy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-125-valid-palindrome">Problem 125: Valid Palindrome</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-26-remove-duplicates-from-sorted-array">Problem 26: Remove Duplicates from Sorted Array</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-88-merge-sorted-array">Problem 88: Merge Sorted Array</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-167-two-sum-ii-input-array-is-sorted">Problem 167: Two Sum II – Input Array Is Sorted</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-283-move-zeroes">Problem 283: Move Zeroes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-344-reverse-string">Problem 344: Reverse String</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-350-intersection-of-two-arrays-ii">Problem 350: Intersection of Two Arrays II</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-977-squares-of-a-sorted-array">Problem 977: Squares of a Sorted Array</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-917-reverse-only-letters">Problem 917: Reverse Only Letters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2133-check-if-every-row-and-column-contains-all-numbers">Problem 2133: Check If Every Row and Column Contains All Numbers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Problem 2133: Check If Every Row and Column Contains All Numbers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#medium">Medium</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-15-3sum">Problem 15: 3Sum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-11-container-with-most-water">Problem 11: Container With Most Water</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-75-sort-colors">Problem 75: Sort Colors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-209-minimum-size-subarray-sum">Problem 209: Minimum Size Subarray Sum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-633-sum-of-square-numbers">Problem 633: Sum of Square Numbers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-31-next-permutation">Problem 31: Next Permutation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-407-trapping-rain-water-ii">Problem 407: Trapping Rain Water II</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-881-boats-to-save-people">Problem 881: Boats to Save People</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-978-longest-turbulent-subarray">Problem 978: Longest Turbulent Subarray</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-937-reorder-data-in-log-files">Problem 937: Reorder Data in Log Files</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hard">Hard</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-42-trapping-rain-water">Problem 42: Trapping Rain Water</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1493-longest-subarray-of-1-s-after-deleting-one-element">Problem 1493: Longest Subarray of 1’s After Deleting One Element</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-132-palindrome-partitioning-ii">Problem 132: Palindrome Partitioning II</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-30-substring-with-concatenation-of-all-words">Problem 30: Substring with Concatenation of All Words</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-727-minimum-window-subsequence">Problem 727: Minimum Window Subsequence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1870-minimum-speed-to-arrive-on-time">Problem 1870: Minimum Speed to Arrive on Time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-862-shortest-subarray-with-sum-at-least-k">Problem 862: Shortest Subarray with Sum at Least K</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-916-word-subsets">Problem 916: Word Subsets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-548-split-array-with-equal-sum">Problem 548: Split Array with Equal Sum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-329-longest-increasing-path-in-a-matrix">Problem 329: Longest Increasing Path in a Matrix</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="two-pointers">
+<h1>Two Pointers<a class="headerlink" href="#two-pointers" title="Permalink to this heading">#</a></h1>
+<section id="easy">
+<h2>Easy<a class="headerlink" href="#easy" title="Permalink to this heading">#</a></h2>
+<section id="problem-125-valid-palindrome">
+<h3>Problem 125: <a class="reference external" href="https://leetcode.com/problems/valid-palindrome/">Valid Palindrome</a><a class="headerlink" href="#problem-125-valid-palindrome" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: String</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Boolean indicating whether the string is a palindrome (ignoring cases and non-alphanumeric characters)</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;A man, a plan, a canal: Panama&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isPalindrome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ch</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">if</span> <span class="n">ch</span><span class="o">.</span><span class="n">isalnum</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">filtered</span> <span class="o">==</span> <span class="n">filtered</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(n)</p>
+</details></section>
+<section id="problem-26-remove-duplicates-from-sorted-array">
+<h3>Problem 26: <a class="reference external" href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">Remove Duplicates from Sorted Array</a><a class="headerlink" href="#problem-26-remove-duplicates-from-sorted-array" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nums</span></code>: Sorted list of integers</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Length of array after removing duplicates (in-place)</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">removeDuplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">slow</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">fast</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">fast</span><span class="p">]</span> <span class="o">!=</span> <span class="n">nums</span><span class="p">[</span><span class="n">slow</span><span class="p">]:</span>
+                <span class="n">slow</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">nums</span><span class="p">[</span><span class="n">slow</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">fast</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">slow</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-88-merge-sorted-array">
+<h3>Problem 88: <a class="reference external" href="https://leetcode.com/problems/merge-sorted-array/">Merge Sorted Array</a><a class="headerlink" href="#problem-88-merge-sorted-array" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nums1</span></code>: First sorted array with extra space</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">m</span></code>: Number of valid elements in <code class="docutils literal notranslate"><span class="pre">nums1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nums2</span></code>: Second sorted array</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: Number of elements in <code class="docutils literal notranslate"><span class="pre">nums2</span></code></p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nums1</span></code> should contain the merged sorted array</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">nums1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">nums2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">nums2</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nums1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">nums2</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="n">nums1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">nums1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">k</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">nums1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">k</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(m + n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-167-two-sum-ii-input-array-is-sorted">
+<h3>Problem 167: <a class="reference external" href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/">Two Sum II – Input Array Is Sorted</a><a class="headerlink" href="#problem-167-two-sum-ii-input-array-is-sorted" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">numbers</span></code>: List of integers (sorted in non-decreasing order)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target</span></code>: Integer target sum</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Indices (1-based) of the two numbers such that they add up to <code class="docutils literal notranslate"><span class="pre">target</span></code></p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">15</span><span class="p">],</span> <span class="n">target</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">twoSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numbers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">curr_sum</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">+</span> <span class="n">numbers</span><span class="p">[</span><span class="n">right</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">curr_sum</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">left</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">right</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">curr_sum</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">right</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-283-move-zeroes">
+<h3>Problem 283: <a class="reference external" href="https://leetcode.com/problems/move-zeroes/">Move Zeroes</a><a class="headerlink" href="#problem-283-move-zeroes" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nums</span></code>: List of integers</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Modify <code class="docutils literal notranslate"><span class="pre">nums</span></code> in-place to move all 0s to the end while maintaining the order of non-zero elements</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">12</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">moveZeroes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">last_non_zero</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">last_non_zero</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">last_non_zero</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">last_non_zero</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-344-reverse-string">
+<h3>Problem 344: <a class="reference external" href="https://leetcode.com/problems/reverse-string/">Reverse String</a><a class="headerlink" href="#problem-344-reverse-string" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: List of characters</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Modify <code class="docutils literal notranslate"><span class="pre">s</span></code> in-place to reverse it</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;h&quot;</span><span class="p">,</span><span class="s2">&quot;e&quot;</span><span class="p">,</span><span class="s2">&quot;l&quot;</span><span class="p">,</span><span class="s2">&quot;l&quot;</span><span class="p">,</span><span class="s2">&quot;o&quot;</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="s2">&quot;l&quot;</span><span class="p">,</span><span class="s2">&quot;l&quot;</span><span class="p">,</span><span class="s2">&quot;e&quot;</span><span class="p">,</span><span class="s2">&quot;h&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reverseString</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">s</span><span class="p">[</span><span class="n">left</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">right</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">left</span><span class="p">]</span>
+            <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">right</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-350-intersection-of-two-arrays-ii">
+<h3>Problem 350: <a class="reference external" href="https://leetcode.com/problems/intersection-of-two-arrays-ii/">Intersection of Two Arrays II</a><a class="headerlink" href="#problem-350-intersection-of-two-arrays-ii" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nums1</span></code>, <code class="docutils literal notranslate"><span class="pre">nums2</span></code>: Lists of integers</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>List of common elements (including duplicates)</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">nums1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">nums2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">intersect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">nums2</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">nums1</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">nums2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">counts</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+                <span class="n">counts</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n + m)<br />
+<strong>Space Complexity:</strong> O(min(n, m))</p>
+</details></section>
+<section id="problem-977-squares-of-a-sorted-array">
+<h3>Problem 977: <a class="reference external" href="https://leetcode.com/problems/squares-of-a-sorted-array/">Squares of a Sorted Array</a><a class="headerlink" href="#problem-977-squares-of-a-sorted-array" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nums</span></code>: List of integers sorted in non-decreasing order</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>List of squares of each number, also sorted</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">100</span><span class="p">]</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span>
+  <span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+      <span class="k">def</span><span class="w"> </span><span class="nf">sortedSquares</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+          <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">)</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n log n)<br />
+<strong>Space Complexity:</strong> O(n)</p>
+</details></section>
+<section id="problem-917-reverse-only-letters">
+<h3>Problem 917: <a class="reference external" href="https://leetcode.com/problems/reverse-only-letters/">Reverse Only Letters</a><a class="headerlink" href="#problem-917-reverse-only-letters" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: String</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>String with only letters reversed (non-letters remain in place)</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;a-bC-dEf-ghIj&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;j-Ih-gfE-dCba&quot;</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reverseOnlyLetters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">letters</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="k">else</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(n)</p>
+</details></section>
+<section id="problem-2133-check-if-every-row-and-column-contains-all-numbers">
+<h3>Problem 2133: <a class="reference external" href="https://leetcode.com/problems/check-if-every-row-and-column-contains-all-numbers/">Check If Every Row and Column Contains All Numbers</a><a class="headerlink" href="#problem-2133-check-if-every-row-and-column-contains-all-numbers" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">matrix</span></code>: List[List[int]] representing an n x n matrix</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Boolean indicating whether each row and column contains all numbers from 1 to n</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">checkValid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">!=</span> <span class="n">valid</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">matrix</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="o">!=</span> <span class="n">valid</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n^2)<br />
+<strong>Space Complexity:</strong> O(n)</p>
+</details></section>
+<section id="id1">
+<h3>Problem 2133: <a class="reference external" href="https://leetcode.com/problems/check-if-every-row-and-column-contains-all-numbers/">Check If Every Row and Column Contains All Numbers</a><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">matrix</span></code>: List[List[int]] representing an n x n matrix</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Boolean indicating whether each row and column contains all numbers from 1 to n</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">checkValid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">!=</span> <span class="n">valid</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">matrix</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="o">!=</span> <span class="n">valid</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n^2)<br />
+<strong>Space Complexity:</strong> O(n)</p>
+</details></section>
+</section>
+<section id="medium">
+<h2>Medium<a class="headerlink" href="#medium" title="Permalink to this heading">#</a></h2>
+<section id="problem-15-3sum">
+<h3>Problem 15: <a class="reference external" href="https://leetcode.com/problems/3sum/">3Sum</a><a class="headerlink" href="#problem-15-3sum" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nums</span></code>: List of integers</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>List of all unique triplets <code class="docutils literal notranslate"><span class="pre">[nums[i],</span> <span class="pre">nums[j],</span> <span class="pre">nums[k]]</span></code> such that <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">≠</span> <span class="pre">j</span> <span class="pre">≠</span> <span class="pre">k</span></code> and <code class="docutils literal notranslate"><span class="pre">nums[i]</span> <span class="pre">+</span> <span class="pre">nums[j]</span> <span class="pre">+</span> <span class="pre">nums[k]</span> <span class="pre">==</span> <span class="pre">0</span></code></p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">threeSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="n">nums</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="k">continue</span>
+            <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">r</span><span class="p">]])</span>
+                    <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">==</span> <span class="n">nums</span><span class="p">[</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span> <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="n">nums</span><span class="p">[</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span> <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+                    <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n²)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-11-container-with-most-water">
+<h3>Problem 11: <a class="reference external" href="https://leetcode.com/problems/container-with-most-water/">Container With Most Water</a><a class="headerlink" href="#problem-11-container-with-most-water" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">height</span></code>: List of non-negative integers</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Maximum area of water a container can store</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">height</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">49</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">maxArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">max_area</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">max_area</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_area</span><span class="p">,</span> <span class="p">(</span><span class="n">right</span> <span class="o">-</span> <span class="n">left</span><span class="p">)</span> <span class="o">*</span> <span class="nb">min</span><span class="p">(</span><span class="n">height</span><span class="p">[</span><span class="n">left</span><span class="p">],</span> <span class="n">height</span><span class="p">[</span><span class="n">right</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="n">height</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">[</span><span class="n">right</span><span class="p">]:</span>
+                <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">right</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">max_area</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-75-sort-colors">
+<h3>Problem 75: <a class="reference external" href="https://leetcode.com/problems/sort-colors/">Sort Colors</a><a class="headerlink" href="#problem-75-sort-colors" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nums</span></code>: List of integers representing 0, 1, and 2</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Modify <code class="docutils literal notranslate"><span class="pre">nums</span></code> in-place to sort by color</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sortColors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">low</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">mid</span> <span class="o">&lt;=</span> <span class="n">high</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">nums</span><span class="p">[</span><span class="n">low</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">low</span><span class="p">]</span>
+                <span class="n">low</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">mid</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">mid</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">high</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">high</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span>
+                <span class="n">high</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-209-minimum-size-subarray-sum">
+<h3>Problem 209: <a class="reference external" href="https://leetcode.com/problems/minimum-size-subarray-sum/">Minimum Size Subarray Sum</a><a class="headerlink" href="#problem-209-minimum-size-subarray-sum" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target</span></code>: Integer</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nums</span></code>: List of positive integers</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Smallest length of a subarray with sum ≥ target</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">target</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">minSubArrayLen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">min_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">right</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">]</span>
+            <span class="k">while</span> <span class="n">total</span> <span class="o">&gt;=</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">min_len</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_len</span><span class="p">,</span> <span class="n">right</span> <span class="o">-</span> <span class="n">left</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">total</span> <span class="o">-=</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span>
+                <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">min_len</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">min_len</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-633-sum-of-square-numbers">
+<h3>Problem 633: <a class="reference external" href="https://leetcode.com/problems/sum-of-square-numbers/">Sum of Square Numbers</a><a class="headerlink" href="#problem-633-sum-of-square-numbers" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: Non-negative integer</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Boolean indicating if there exist a, b such that a² + b² = c</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>  <span class="c1"># (1^2 + 2^2 = 5)</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">judgeSquareSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="n">left</span> <span class="o">*</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span> <span class="o">*</span> <span class="n">right</span>
+            <span class="k">if</span> <span class="n">total</span> <span class="o">==</span> <span class="n">c</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">total</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">right</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(√c)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-31-next-permutation">
+<h3>Problem 31: <a class="reference external" href="https://leetcode.com/problems/next-permutation/">Next Permutation</a><a class="headerlink" href="#problem-31-next-permutation" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nums</span></code>: List of integers</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Rearrange <code class="docutils literal notranslate"><span class="pre">nums</span></code> into the next lexicographically greater permutation</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nextPermutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+            <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:])</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-407-trapping-rain-water-ii">
+<h3>Problem 407: <a class="reference external" href="https://leetcode.com/problems/trapping-rain-water-ii/">Trapping Rain Water II</a><a class="headerlink" href="#problem-407-trapping-rain-water-ii" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">heightMap</span></code>: 2D list of integers representing elevation heights</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Total water trapped after raining</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">heightMap</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">heapq</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">trapRainWater</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heightMap</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">heightMap</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">heightMap</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">heightMap</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">heightMap</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">visited</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+        <span class="n">heap</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="p">(</span><span class="n">heightMap</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+                <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]:</span>
+                    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="p">(</span><span class="n">heightMap</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+                    <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">water</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">directions</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="k">while</span> <span class="n">heap</span><span class="p">:</span>
+            <span class="n">height</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="ow">in</span> <span class="n">directions</span><span class="p">:</span>
+                <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nx</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ny</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">visited</span><span class="p">[</span><span class="n">nx</span><span class="p">][</span><span class="n">ny</span><span class="p">]:</span>
+                    <span class="n">water</span> <span class="o">+=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">height</span> <span class="o">-</span> <span class="n">heightMap</span><span class="p">[</span><span class="n">nx</span><span class="p">][</span><span class="n">ny</span><span class="p">])</span>
+                    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">heightMap</span><span class="p">[</span><span class="n">nx</span><span class="p">][</span><span class="n">ny</span><span class="p">]),</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">))</span>
+                    <span class="n">visited</span><span class="p">[</span><span class="n">nx</span><span class="p">][</span><span class="n">ny</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">water</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(mn log(mn))<br />
+<strong>Space Complexity:</strong> O(mn)</p>
+</details></section>
+<section id="problem-881-boats-to-save-people">
+<h3>Problem 881: <a class="reference external" href="https://leetcode.com/problems/boats-to-save-people/">Boats to Save People</a><a class="headerlink" href="#problem-881-boats-to-save-people" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">people</span></code>: List of people’s weights</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code>: Integer representing max weight per boat</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Minimum number of boats needed</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">people</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">numRescueBoats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">people</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">people</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">people</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">boats</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">j</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">people</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">people</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">limit</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">boats</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">boats</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n log n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-978-longest-turbulent-subarray">
+<h3>Problem 978: <a class="reference external" href="https://leetcode.com/problems/longest-turbulent-subarray/">Longest Turbulent Subarray</a><a class="headerlink" href="#problem-978-longest-turbulent-subarray" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">arr</span></code>: List of integers</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Length of the longest turbulent subarray</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">maxTurbulenceSize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">up</span> <span class="o">=</span> <span class="n">down</span> <span class="o">=</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">up</span><span class="p">,</span> <span class="n">down</span> <span class="o">=</span> <span class="n">down</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">down</span><span class="p">,</span> <span class="n">up</span> <span class="o">=</span> <span class="n">up</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">up</span> <span class="o">=</span> <span class="n">down</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">up</span><span class="p">,</span> <span class="n">down</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-937-reorder-data-in-log-files">
+<h3>Problem 937: <a class="reference external" href="https://leetcode.com/problems/reorder-data-in-log-files/">Reorder Data in Log Files</a><a class="headerlink" href="#problem-937-reorder-data-in-log-files" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">logs</span></code>: List of log strings</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Reordered log list: letter-logs before digit-logs, and letter-logs sorted by content and identifier</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">logs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;dig1 8 1 5 1&quot;</span><span class="p">,</span> <span class="s2">&quot;let1 art can&quot;</span><span class="p">,</span> <span class="s2">&quot;dig2 3 6&quot;</span><span class="p">,</span> <span class="s2">&quot;let2 own kit dig&quot;</span><span class="p">,</span> <span class="s2">&quot;let3 art zero&quot;</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;let1 art can&quot;</span><span class="p">,</span> <span class="s2">&quot;let3 art zero&quot;</span><span class="p">,</span> <span class="s2">&quot;let2 own kit dig&quot;</span><span class="p">,</span> <span class="s2">&quot;dig1 8 1 5 1&quot;</span><span class="p">,</span> <span class="s2">&quot;dig2 3 6&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reorderLogFiles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">get_key</span><span class="p">(</span><span class="n">log</span><span class="p">):</span>
+            <span class="n">id_</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rest</span><span class="p">,</span> <span class="n">id_</span><span class="p">)</span> <span class="k">if</span> <span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="k">else</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">logs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">get_key</span><span class="p">)</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n log n)<br />
+<strong>Space Complexity:</strong> O(n)</p>
+</details></section>
+</section>
+<section id="hard">
+<h2>Hard<a class="headerlink" href="#hard" title="Permalink to this heading">#</a></h2>
+<section id="problem-42-trapping-rain-water">
+<h3>Problem 42: <a class="reference external" href="https://leetcode.com/problems/trapping-rain-water/">Trapping Rain Water</a><a class="headerlink" href="#problem-42-trapping-rain-water" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">height</span></code>: List of non-negative integers representing elevation map</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Amount of rain water that can be trapped</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">height</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">6</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">trap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">height</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">left_max</span><span class="p">,</span> <span class="n">right_max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="n">water</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">height</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">[</span><span class="n">right</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">height</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">left_max</span><span class="p">:</span>
+                    <span class="n">left_max</span> <span class="o">=</span> <span class="n">height</span><span class="p">[</span><span class="n">left</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">water</span> <span class="o">+=</span> <span class="n">left_max</span> <span class="o">-</span> <span class="n">height</span><span class="p">[</span><span class="n">left</span><span class="p">]</span>
+                <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">height</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">right_max</span><span class="p">:</span>
+                    <span class="n">right_max</span> <span class="o">=</span> <span class="n">height</span><span class="p">[</span><span class="n">right</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">water</span> <span class="o">+=</span> <span class="n">right_max</span> <span class="o">-</span> <span class="n">height</span><span class="p">[</span><span class="n">right</span><span class="p">]</span>
+                <span class="n">right</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">water</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-1493-longest-subarray-of-1-s-after-deleting-one-element">
+<h3>Problem 1493: <a class="reference external" href="https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/">Longest Subarray of 1’s After Deleting One Element</a><a class="headerlink" href="#problem-1493-longest-subarray-of-1-s-after-deleting-one-element" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nums</span></code>: List of 0s and 1s</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Maximum number of consecutive 1s you can get by deleting one element</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">longestSubarray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">zero_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">max_len</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">right</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">zero_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="n">zero_count</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">zero_count</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">max_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">right</span> <span class="o">-</span> <span class="n">left</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">max_len</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-132-palindrome-partitioning-ii">
+<h3>Problem 132: <a class="reference external" href="https://leetcode.com/problems/palindrome-partitioning-ii/">Palindrome Partitioning II</a><a class="headerlink" href="#problem-132-palindrome-partitioning-ii" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: A string</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Minimum number of cuts needed to partition the string such that every substring is a palindrome</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;aab&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">minCut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+        <span class="n">is_palindrome</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">min_cut</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">is_palindrome</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">is_palindrome</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">min_cut</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_cut</span><span class="p">,</span> <span class="n">dp</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_cut</span>
+        <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n²)<br />
+<strong>Space Complexity:</strong> O(n²)</p>
+</details></section>
+<section id="problem-30-substring-with-concatenation-of-all-words">
+<h3>Problem 30: <a class="reference external" href="https://leetcode.com/problems/substring-with-concatenation-of-all-words/">Substring with Concatenation of All Words</a><a class="headerlink" href="#problem-30-substring-with-concatenation-of-all-words" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: A string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">words</span></code>: List of words (all the same length)</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Starting indices of substring(s) that is the concatenation of all the words</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;barfoothefoobarman&quot;</span><span class="p">,</span> <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span><span class="s2">&quot;bar&quot;</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">findSubstring</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">words</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">words</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">word_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">total_len</span> <span class="o">=</span> <span class="n">word_len</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+        <span class="n">word_count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">word_len</span><span class="p">):</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">cur_count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+            <span class="k">while</span> <span class="n">right</span> <span class="o">+</span> <span class="n">word_len</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+                <span class="n">word</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">right</span><span class="p">:</span><span class="n">right</span> <span class="o">+</span> <span class="n">word_len</span><span class="p">]</span>
+                <span class="n">right</span> <span class="o">+=</span> <span class="n">word_len</span>
+                <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_count</span><span class="p">:</span>
+                    <span class="n">cur_count</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">while</span> <span class="n">cur_count</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">word_count</span><span class="p">[</span><span class="n">word</span><span class="p">]:</span>
+                        <span class="n">cur_count</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">left</span><span class="p">:</span><span class="n">left</span> <span class="o">+</span> <span class="n">word_len</span><span class="p">]]</span> <span class="o">-=</span> <span class="mi">1</span>
+                        <span class="n">left</span> <span class="o">+=</span> <span class="n">word_len</span>
+                    <span class="k">if</span> <span class="n">right</span> <span class="o">-</span> <span class="n">left</span> <span class="o">==</span> <span class="n">total_len</span><span class="p">:</span>
+                        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">cur_count</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                    <span class="n">left</span> <span class="o">=</span> <span class="n">right</span>
+        <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(N * M) where N is len(s), M is len(words)<br />
+<strong>Space Complexity:</strong> O(M)</p>
+</details></section>
+<section id="problem-727-minimum-window-subsequence">
+<h3>Problem 727: <a class="reference external" href="https://leetcode.com/problems/minimum-window-subsequence/">Minimum Window Subsequence</a><a class="headerlink" href="#problem-727-minimum-window-subsequence" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s1</span></code>: Source string</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s2</span></code>: Target subsequence string</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Minimum window in <code class="docutils literal notranslate"><span class="pre">s1</span></code> which contains all characters of <code class="docutils literal notranslate"><span class="pre">s2</span></code> in order</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">s1</span> <span class="o">=</span> <span class="s2">&quot;abcdebdde&quot;</span><span class="p">,</span> <span class="n">s2</span> <span class="o">=</span> <span class="s2">&quot;bde&quot;</span>
+<span class="n">Output</span><span class="p">:</span> <span class="s2">&quot;bcde&quot;</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">minWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">s2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">k</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="k">while</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">s1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                        <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+                    <span class="n">end</span> <span class="o">=</span> <span class="n">k</span>
+                    <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+                    <span class="n">k</span> <span class="o">-=</span> <span class="mi">1</span>
+                    <span class="k">while</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">s1</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                            <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+                        <span class="n">k</span> <span class="o">-=</span> <span class="mi">1</span>
+                    <span class="n">start</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">res</span> <span class="ow">or</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
+                        <span class="n">res</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+                    <span class="n">i</span> <span class="o">=</span> <span class="n">start</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(m * n)<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-1870-minimum-speed-to-arrive-on-time">
+<h3>Problem 1870: <a class="reference external" href="https://leetcode.com/problems/minimum-speed-to-arrive-on-time/">Minimum Speed to Arrive on Time</a><a class="headerlink" href="#problem-1870-minimum-speed-to-arrive-on-time" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dist</span></code>: List of distances</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hour</span></code>: Time available to arrive</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Minimum integer speed required to reach on time, or -1 if impossible</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">hour</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">minSpeedOnTime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">hour</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="n">hour</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">time_needed</span><span class="p">(</span><span class="n">speed</span><span class="p">):</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dist</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">d</span> <span class="o">/</span> <span class="n">speed</span><span class="p">)</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">dist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">speed</span>
+            <span class="k">return</span> <span class="n">total</span>
+
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="mi">7</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="n">time_needed</span><span class="p">(</span><span class="n">mid</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">hour</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">mid</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n log M), where M = max speed<br />
+<strong>Space Complexity:</strong> O(1)</p>
+</details></section>
+<section id="problem-862-shortest-subarray-with-sum-at-least-k">
+<h3>Problem 862: <a class="reference external" href="https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/">Shortest Subarray with Sum at Least K</a><a class="headerlink" href="#problem-862-shortest-subarray-with-sum-at-least-k" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nums</span></code>: List of integers</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">k</span></code>: Integer target sum</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Length of the shortest non-empty subarray with sum at least <code class="docutils literal notranslate"><span class="pre">k</span></code>, or -1 if none</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">shortestSubarray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">prefix</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">prefix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">dq</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">while</span> <span class="n">dq</span> <span class="ow">and</span> <span class="n">prefix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">prefix</span><span class="p">[</span><span class="n">dq</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">&gt;=</span> <span class="n">k</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="n">dq</span><span class="o">.</span><span class="n">popleft</span><span class="p">())</span>
+            <span class="k">while</span> <span class="n">dq</span> <span class="ow">and</span> <span class="n">prefix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">prefix</span><span class="p">[</span><span class="n">dq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]:</span>
+                <span class="n">dq</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">dq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">res</span> <span class="k">if</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n)<br />
+<strong>Space Complexity:</strong> O(n)</p>
+</details></section>
+<section id="problem-916-word-subsets">
+<h3>Problem 916: <a class="reference external" href="https://leetcode.com/problems/word-subsets/">Word Subsets</a><a class="headerlink" href="#problem-916-word-subsets" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">words1</span></code>, <code class="docutils literal notranslate"><span class="pre">words2</span></code>: Lists of strings</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>List of universal words from <code class="docutils literal notranslate"><span class="pre">words1</span></code> that are supersets of all words in <code class="docutils literal notranslate"><span class="pre">words2</span></code></p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">words1</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;amazon&quot;</span><span class="p">,</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span><span class="s2">&quot;facebook&quot;</span><span class="p">,</span><span class="s2">&quot;google&quot;</span><span class="p">,</span><span class="s2">&quot;leetcode&quot;</span><span class="p">],</span> 
+       <span class="n">words2</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;e&quot;</span><span class="p">,</span><span class="s2">&quot;o&quot;</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;facebook&quot;</span><span class="p">,</span><span class="s2">&quot;google&quot;</span><span class="p">,</span><span class="s2">&quot;leetcode&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wordSubsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words1</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">words2</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">max_count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words2</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">count</span><span class="p">:</span>
+                <span class="n">max_count</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_count</span><span class="p">[</span><span class="n">char</span><span class="p">],</span> <span class="n">count</span><span class="p">[</span><span class="n">char</span><span class="p">])</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">is_universal</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">max_count</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">count</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">max_count</span><span class="p">[</span><span class="n">char</span><span class="p">]:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words1</span> <span class="k">if</span> <span class="n">is_universal</span><span class="p">(</span><span class="n">word</span><span class="p">)]</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n * k), where n = len(words1), k = average word length<br />
+<strong>Space Complexity:</strong> O(1) (26 letters)</p>
+</details></section>
+<section id="problem-548-split-array-with-equal-sum">
+<h3>Problem 548: <a class="reference external" href="https://leetcode.com/problems/split-array-with-equal-sum/">Split Array with Equal Sum</a><a class="headerlink" href="#problem-548-split-array-with-equal-sum" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nums</span></code>: List of integers</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Boolean: can you split array into 4 parts with equal sums</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">splitArray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">left_sum</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">left_sum</span> <span class="o">+=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">left_sum</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span><span class="n">j</span><span class="p">])</span> <span class="o">-</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">left_sum</span><span class="p">)</span>
+            <span class="n">right_sum</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">right_sum</span> <span class="o">+=</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="k">else</span> <span class="mi">0</span>
+                <span class="k">if</span> <span class="n">right_sum</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span><span class="n">k</span><span class="p">])</span> <span class="o">-</span> <span class="n">nums</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">right_sum</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(n²)<br />
+<strong>Space Complexity:</strong> O(n)</p>
+</details></section>
+<section id="problem-329-longest-increasing-path-in-a-matrix">
+<h3>Problem 329: <a class="reference external" href="https://leetcode.com/problems/longest-increasing-path-in-a-matrix/">Longest Increasing Path in a Matrix</a><a class="headerlink" href="#problem-329-longest-increasing-path-in-a-matrix" title="Permalink to this heading">#</a></h3>
+<p><strong>Input</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">matrix</span></code>: 2D list of integers</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p>Length of the longest increasing path in the matrix</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span> <span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">Output</span><span class="p">:</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<details>
+  <summary><strong>Solution Code</strong></summary>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">longestIncreasingPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">matrix</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">memo</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">memo</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span>
+            <span class="n">best</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="ow">in</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]:</span>
+                <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nx</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ny</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="ow">and</span> <span class="n">matrix</span><span class="p">[</span><span class="n">nx</span><span class="p">][</span><span class="n">ny</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">val</span><span class="p">:</span>
+                    <span class="n">best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">dfs</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">))</span>
+            <span class="n">memo</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">best</span>
+            <span class="k">return</span> <span class="n">best</span>
+
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">dfs</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+</pre></div>
+</div>
+</details>
+<details>
+  <summary><strong>Complexity Analysis</strong></summary>
+<p><strong>Time Complexity:</strong> O(m * n)<br />
+<strong>Space Complexity:</strong> O(m * n)</p>
+</details></section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "conda-base-py"
+        },
+        kernelOptions: {
+            name: "conda-base-py",
+            path: "./problems"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'conda-base-py'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="12_part.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Sliding Window</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="14_part.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Prefix Sum / Pointer</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#easy">Easy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-125-valid-palindrome">Problem 125: Valid Palindrome</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-26-remove-duplicates-from-sorted-array">Problem 26: Remove Duplicates from Sorted Array</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-88-merge-sorted-array">Problem 88: Merge Sorted Array</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-167-two-sum-ii-input-array-is-sorted">Problem 167: Two Sum II – Input Array Is Sorted</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-283-move-zeroes">Problem 283: Move Zeroes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-344-reverse-string">Problem 344: Reverse String</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-350-intersection-of-two-arrays-ii">Problem 350: Intersection of Two Arrays II</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-977-squares-of-a-sorted-array">Problem 977: Squares of a Sorted Array</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-917-reverse-only-letters">Problem 917: Reverse Only Letters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2133-check-if-every-row-and-column-contains-all-numbers">Problem 2133: Check If Every Row and Column Contains All Numbers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Problem 2133: Check If Every Row and Column Contains All Numbers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#medium">Medium</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-15-3sum">Problem 15: 3Sum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-11-container-with-most-water">Problem 11: Container With Most Water</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-75-sort-colors">Problem 75: Sort Colors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-209-minimum-size-subarray-sum">Problem 209: Minimum Size Subarray Sum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-633-sum-of-square-numbers">Problem 633: Sum of Square Numbers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-31-next-permutation">Problem 31: Next Permutation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-407-trapping-rain-water-ii">Problem 407: Trapping Rain Water II</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-881-boats-to-save-people">Problem 881: Boats to Save People</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-978-longest-turbulent-subarray">Problem 978: Longest Turbulent Subarray</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-937-reorder-data-in-log-files">Problem 937: Reorder Data in Log Files</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hard">Hard</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-42-trapping-rain-water">Problem 42: Trapping Rain Water</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1493-longest-subarray-of-1-s-after-deleting-one-element">Problem 1493: Longest Subarray of 1’s After Deleting One Element</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-132-palindrome-partitioning-ii">Problem 132: Palindrome Partitioning II</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-30-substring-with-concatenation-of-all-words">Problem 30: Substring with Concatenation of All Words</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-727-minimum-window-subsequence">Problem 727: Minimum Window Subsequence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1870-minimum-speed-to-arrive-on-time">Problem 1870: Minimum Speed to Arrive on Time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-862-shortest-subarray-with-sum-at-least-k">Problem 862: Shortest Subarray with Sum at Least K</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-916-word-subsets">Problem 916: Word Subsets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-548-split-array-with-equal-sum">Problem 548: Split Array with Equal Sum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-329-longest-increasing-path-in-a-matrix">Problem 329: Longest Increasing Path in a Matrix</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By svgoudar
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
